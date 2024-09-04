@@ -55,7 +55,7 @@ export default function Footer(props) {
   ];
 
   return (
-    <div className="footer" style={{ padding: '2rem 0 0rem 0' }}>
+    <div className="footer" style={{ padding: '2rem 0 0rem 0', backgroundColor: 'black' }}>
       <div className={`footer__link ${isMobile ? 'footer__link--mobile' : ''}`} style={{ margin: '10px 0 25px 0' }}>
         {isMobile ? (
           <>
@@ -179,13 +179,13 @@ export default function Footer(props) {
           </div>
         )}
       </div>
-      <div className="footer__bottom">
+      <div className="footer__bottom" style={{ color: "black" }}>
         <div className="footer__copyrights">
           <p className="footer__copyrights__text">Tienda LEO</p>
           <i className="far fa-copyright footer__copyrights__icon"></i>
           <p className="footer__copyrights__text">2023</p>
         </div>
-        <div className="footer__copyrights" style={{ color: "white" }}>
+        <div className="footer__copyrights">
           Creado por
           &nbsp;
           <NavLink to="https://adasoft.com.ar" className="nav-link blink-link"><u>ADASOFT</u> </NavLink>

@@ -24,25 +24,26 @@ import { useMediaQuery, useTheme } from '@mui/material';
 import AddCircleOutlineIcon from '@mui/icons-material/AddCircleOutline';
 
 const pages = [
+ 
   {
     id: 1,
-    name: 'Productos'
+    name: 'Batidos'
   },
   {
     id: 2,
-    name: 'Frutas'
+    name: 'Helados'
   },
   {
     id: 3,
-    name: 'Verduras'
+    name: 'Productos'
   },
   {
     id: 4,
-    name: 'Mercaderias'
+    name: 'Frutas'
   },
   {
     id: 5,
-    name: 'Fiambres'
+    name: 'Verduras'
   },
   {
     id: 6,

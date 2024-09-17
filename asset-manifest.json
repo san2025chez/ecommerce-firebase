@@ -1,7 +1,7 @@
 {
   "files": {
-    "main.css": "/ecommerce-firebase/static/css/main.d3cf445b.css",
-    "main.js": "/ecommerce-firebase/static/js/main.91e688d1.js",
+    "main.css": "/ecommerce-firebase/static/css/main.6c5534a4.css",
+    "main.js": "/ecommerce-firebase/static/js/main.2bc718d9.js",
     "static/js/787.78c9b97c.chunk.js": "/ecommerce-firebase/static/js/787.78c9b97c.chunk.js",
     "static/media/Slider_Nutre_Deporte_claimer.png": "/ecommerce-firebase/static/media/Slider_Nutre_Deporte_claimer.7a1e28e378ee402c91e3.png",
     "static/media/Slider_nightrace.webp": "/ecommerce-firebase/static/media/Slider_nightrace.11df38a85b208eb7a7c0.webp",
@@ -16,12 +16,12 @@
     "static/media/roboto-vietnamese-400-normal.woff2": "/ecommerce-firebase/static/media/roboto-vietnamese-400-normal.3230f9b040f3c630e0c3.woff2",
     "static/media/roboto-greek-ext-400-normal.woff2": "/ecommerce-firebase/static/media/roboto-greek-ext-400-normal.169619821ea93019d1bb.woff2",
     "index.html": "/ecommerce-firebase/index.html",
-    "main.d3cf445b.css.map": "/ecommerce-firebase/static/css/main.d3cf445b.css.map",
-    "main.91e688d1.js.map": "/ecommerce-firebase/static/js/main.91e688d1.js.map",
+    "main.6c5534a4.css.map": "/ecommerce-firebase/static/css/main.6c5534a4.css.map",
+    "main.2bc718d9.js.map": "/ecommerce-firebase/static/js/main.2bc718d9.js.map",
     "787.78c9b97c.chunk.js.map": "/ecommerce-firebase/static/js/787.78c9b97c.chunk.js.map"
   },
   "entrypoints": [
-    "static/css/main.d3cf445b.css",
-    "static/js/main.91e688d1.js"
+    "static/css/main.6c5534a4.css",
+    "static/js/main.2bc718d9.js"
   ]
 }

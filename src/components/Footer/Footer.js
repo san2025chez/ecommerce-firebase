@@ -55,8 +55,8 @@ export default function Footer(props) {
   ];
 
   return (
-    <div className="footer" style={{ padding: '2rem 0 0rem 0', backgroundColor: 'black' }}>
-      <div className={`footer__link ${isMobile ? 'footer__link--mobile' : ''}`} style={{ margin: '10px 0 25px 0' }}>
+    <div className="footer" style={{ backgroundColor: 'black',display: 'flex', flexDirection: 'column', alignItems: 'center'}}>
+      <div className={`footer__link ${isMobile ? 'footer__link--mobile' : ''}`} style={{ margin: '0 0 15px 0', flex: '0 1 auto'}}>
         {isMobile ? (
           <>
             <div className="footer__link__row">
@@ -179,13 +179,13 @@ export default function Footer(props) {
           </div>
         )}
       </div>
-      <div className="footer__bottom" style={{ color: "black" }}>
-        <div className="footer__copyrights">
+      <div className="footer__bottom" style={{ color: "black", flexShrink: 0, display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
+{/*         <div className="footer__copyrights" style={{ display: 'flex', alignItems: 'center', marginRight: '10px' }}>
           <p className="footer__copyrights__text">Tienda LEO</p>
-          <i className="far fa-copyright footer__copyrights__icon"></i>
+          <i className="far fa-copyright footer__copyrights__icon" style={{ margin: '0 5px' }}></i>
           <p className="footer__copyrights__text">2023</p>
-        </div>
-        <div className="footer__copyrights">
+        </div> */}
+        <div className="footer__copyrights" style={{ display: 'flex', alignItems: 'center' , color:'white'}}>
           Creado por
           &nbsp;
           <NavLink to="https://adasoft.com.ar" className="nav-link blink-link"><u>ADASOFT</u> </NavLink>

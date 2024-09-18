@@ -49,6 +49,7 @@ const useStyles = makeStyles((theme) => ({
     padding: '20px',
     backgroundColor: '#f9f9f9', // Color de fondo para el listado completo
     borderRadius: '8px', // Opcional: Bordes redondeados
+       textAlign: 'center',
     boxShadow: '0 4px 8px rgba(0, 0, 0, 0.1)', // Opcional: Sombra para el listado completo
     [theme.breakpoints.down('sm')]: {
       padding: theme.spacing(2),
@@ -117,14 +118,24 @@ const Home = () => {
               </div>
             ) : (
               <>
-                <div className={classes.offersContainer}>
-                  <h1 className={classes.offersTitle}>Ofertas Especiales</h1>
-                  <ItemList items={offers} /> {/* Mostrar ofertas aquí */}
-                </div>
-                <div className={classes.separator} /> {/* Línea de separación */}
-                <div className={classes.itemListContainer}>
+            
+             
+            <div className={classes.offersContainer}>
+                   <h1 className={classes.offersTitle}>Ofertas Especiales</h1>
+                   <ItemList items={offers} /> {/* Mostrar ofertas aquí */}
+          
+                   <div className={classes.separator} /> {/* Línea de separación */}
+
+       
+                   <div className={classes.itemListContainer}>
+                  <h1 className={classes.offersTitle}>Mas Vendidos</h1>
                   <ItemList items={items} />
                 </div>
+
+
+
+                
+                 </div>
               </>
             )
           }

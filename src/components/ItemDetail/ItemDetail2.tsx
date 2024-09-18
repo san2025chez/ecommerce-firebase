@@ -290,7 +290,7 @@ export const ItemDetail2: FC<ProductBodyProps> = ({ product }) => {
       spacing={3}
     >
       <Grid item xs={12}>
-        <Card variant="outlined" elevation={0}>
+        <Card variant="outlined" elevation={0} sx={{ border: 'none', boxShadow: 'none' }}>
         <Grid container spacing={0}>
       
         </Grid>

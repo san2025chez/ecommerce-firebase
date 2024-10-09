@@ -10,30 +10,36 @@ import './item.scss';
 
 const useStyles = makeStyles((theme) => ({
   card: {
-    width: 300,
-    height: 300, // Altura fija para todas las cards
+    width: '100%', // Ancho total
+    maxWidth: 300, // Ancho máximo
+    height: 'auto', // Altura automática para que se ajuste al contenido
     margin: 'auto',
     display: 'flex',
     flexDirection: 'column',
     alignItems: 'center',
     borderRadius: 8,
     boxShadow: '0px 4px 8px rgba(0, 0, 0, 0.1)',
-    overflow: 'hidden', // Asegura que el contenido no se desborde
+    overflow: 'hidden',
     [theme.breakpoints.down('sm')]: {
-      width: 200, // Reducimos el ancho para dispositivos pequeños
-      height: 260, // Aumentamos la altura para dispositivos pequeños
-      paddingTop: 15
+      maxWidth: 200,
     },
     [theme.breakpoints.down('xs')]: {
-      width: 180,
-      height: 260,
-      paddingTop: 15
+      maxWidth: 180,
     },
   },
   media: {
-    width: '60%',
-    height: '60%', // Porcentaje del tamaño de la card
-    objectFit: 'cover', // Ajusta la imagen para cubrir el contenedor sin distorsionarse
+    paddingTop: '10px',
+    width: '100%', // Asegúrate de que ocupa el ancho completo
+    height: '200px', // Altura fija para mantener la consistencia
+    display: 'flex', // Habilita flexbox
+    justifyContent: 'center', // Centra horizontalmente
+    alignItems: 'center', // Centra verticalmente
+    overflow: 'hidden', // Oculta cualquier contenido desbordante
+  },
+  img: {
+    maxWidth: '100%', // Asegura que la imagen no exceda el ancho del contenedor
+    maxHeight: '100%', // Asegura que la imagen no exceda la altura del contenedor
+    objectFit: 'cover', // Mantiene la relación de aspecto de la imagen
   },
   header: {
     textAlign: 'center',
@@ -54,13 +60,13 @@ const Item = ({ product }) => {
   return (
     <Link to={`/detalle/${product.id}`}>
       <Card className={classes.card}>
-        <CardMedia
-          component="img"
-          className={classes.media}
-          image={product.img}   /*   image={product.images[0].url || product.images[0]} */
-      
-          title={product.productName}
-        />
+      <div className={classes.media}>
+          <img
+            src={product.img}
+            alt={product.productName}
+            className={classes.img}
+          />
+        </div>
         <CardHeader
           className={classes.header}
           disableTypography

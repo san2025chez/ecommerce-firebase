@@ -18,21 +18,24 @@ const useStyles = makeStyles((theme) => ({
     },
   },
   offersContainer: {
-    padding: '20px',
+    padding: '5px',
     backgroundColor: '#ffffff', // Color blanco para las ofertas
     textAlign: 'center',
+
     marginBottom: '20px',
     borderRadius: '8px', // Opcional: Añade bordes redondeados para un estilo más moderno
     boxShadow: '0 4px 8px rgba(0, 0, 0, 0.1)', // Opcional: Añade sombra para destacar el contenedor
     [theme.breakpoints.down('sm')]: {
-      padding: theme.spacing(2),
+     
     },
   },
   offersTitle: {
-    fontSize: '2rem', // Tamaño de fuente para el título
+    fontSize: '1.5rem', // Tamaño de fuente para el título
     fontWeight: 'bold',
     color: '#333', // Color del texto
     marginBottom: '20px',
+    fontFamily:'"Roboto", "Helvetica", "Arial", sans-serif',
+
     [theme.breakpoints.down('sm')]: {
       fontSize: '1.5rem', // Tamaño de fuente en pantallas pequeñas
     },
@@ -46,13 +49,18 @@ const useStyles = makeStyles((theme) => ({
     },
   },
   itemListContainer: {
-    padding: '20px',
-    backgroundColor: '#f9f9f9', // Color de fondo para el listado completo
+    padding: '5px',
+    width: '100%',
+    backgroundColor: '#FFFFFF', // Color de fondo para el listado completo
     borderRadius: '8px', // Opcional: Bordes redondeados
-       textAlign: 'center',
+    textAlign: 'center',
     boxShadow: '0 4px 8px rgba(0, 0, 0, 0.1)', // Opcional: Sombra para el listado completo
+    display: 'flex', // Añade flexbox
+    justifyContent: 'center', // Centra el contenido
+    flexDirection: 'column', // Asegúrate de que los hijos se apilen
     [theme.breakpoints.down('sm')]: {
-      padding: theme.spacing(2),
+      width: '100%',
+      backgroundColor: '#FFFFFF',
     },
   },
 }));
@@ -67,7 +75,7 @@ const Home = () => {
 
   useEffect(() => {
     const itemCollection = collection(db, "productos");
-    
+
     // Consultar ofertas
     const fetchOffers = async () => {
       const offerQuery = query(itemCollection, where('enOferta', '==', true)); // Asegúrate de que 'enOferta' sea el campo correcto
@@ -77,6 +85,7 @@ const Home = () => {
         id: doc.id
       })));
     };
+   
 
     // Consultar todos los productos
     const fetchProducts = async () => {
@@ -88,11 +97,17 @@ const Home = () => {
           id: doc.id
         })));
       } else {
-        const snapshot = await getDocs(itemCollection);
-        setItems(snapshot.docs.map((doc) => ({
+        const productQuery = query(itemCollection, where('categoria', '==', 'Productos')); // Asegúrate de que 'enOferta' sea el campo correcto
+        const productsSnapshot = await getDocs(productQuery);
+        setItems(productsSnapshot.docs.map((doc) => ({
           ...doc.data(),
           id: doc.id
         })));
+  /*       const snapshot = await getDocs(itemCollection);
+        setItems(snapshot.docs.map((doc) => ({
+          ...doc.data(),
+          id: doc.id
+        }))); */
       }
     };
 
@@ -118,24 +133,20 @@ const Home = () => {
               </div>
             ) : (
               <>
-            
-             
-            <div className={classes.offersContainer}>
-                   <h1 className={classes.offersTitle}>Ofertas Especiales</h1>
-                   <ItemList items={offers} /> {/* Mostrar ofertas aquí */}
-          
-                   <div className={classes.separator} /> {/* Línea de separación */}
 
-       
-                   <div className={classes.itemListContainer}>
-                  <h1 className={classes.offersTitle}>Mas Vendidos</h1>
-                  <ItemList items={items} />
+
+                <div className={classes.offersContainer}>
+                  <h1 className={classes.offersTitle}>Ofertas Especiales</h1>
+                  <ItemList items={offers} /> {/* Mostrar ofertas aquí */}
+
+                  <div className={classes.separator} /> {/* Línea de separación */}
+
+
+                  <div className={classes.itemListContainer}>
+                    <h1 className={classes.offersTitle}>Productos Nutricionales</h1>
+                    <ItemList items={items} />
+                  </div>
                 </div>
-
-
-
-                
-                 </div>
               </>
             )
           }

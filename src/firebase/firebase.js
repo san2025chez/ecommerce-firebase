@@ -4,14 +4,13 @@ import { initializeApp } from "firebase/app";
 import {getFirestore} from "firebase/firestore"
 
 const firebaseConfig={
-   
-        apiKey: "AIzaSyDkDB0jpM_0ef5T00RZZB2yWFE2sEBfc74",
-        authDomain: "despensa-c8032.firebaseapp.com",
-        projectId: "despensa-c8032",
-        storageBucket: "despensa-c8032.appspot.com",
-        messagingSenderId: "568260298771",
-        appId: "1:568260298771:web:dea106294d7e3987f897e6",
-        measurementId: "G-RDDZZZXBC6"
+        apiKey:process.env.REACT_APP_APIKEY,
+        authDomain: process.env.REACT_APP_AUTH_DOMAIN,
+        projectId:process.env.REACT_APP_PROJECTID,
+        storageBucket:process.env.REACT_APP_STORAGEBUCKET,
+        messagingSenderId:process.env.REACT_APP_MESSAGINGSENDERID,
+        appId:process.env.REACT_APP_APPID,
+        measurementId:process.env.REACT_APP_MEASUREMENTID
    
 
 }

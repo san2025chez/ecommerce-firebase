@@ -18,10 +18,8 @@ const useStyles = makeStyles((theme) => ({
     gridItem: {
       padding: theme.spacing(2), // Espaciado por defecto
       [theme.breakpoints.down('sm')]: {
-        padding: theme.spacing(0.5),
-        paddingLeft: '0px',
-        paddingRight:0 ,
-        marginLeft: '0px'// Espaciado para dispositivos móviles
+        padding: theme.spacing(2),
+     backgroundColor: '#FFFFFF'
       },
     },
   }));

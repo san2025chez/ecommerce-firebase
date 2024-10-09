@@ -21,7 +21,7 @@ const useStyles = makeStyles((theme) => ({
 
 export const Cart = () => {
   const { cart, totalCompra, removeItem } = useContext(CartCntext2);
-  const classes = useStyles();
+
   const isMobile = useMediaQuery('(max-width:600px)');
   const buttonStyle = {
     borderColor: '#6a1b9a',

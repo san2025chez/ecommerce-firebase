@@ -434,7 +434,7 @@ export const ItemDetail2: FC<ProductBodyProps> = ({ product }) => {
                 >
                   <Box mb={{ xs: 2, md: 0 }} textAlign={{ xs: 'center', md: 'left' }}>
                     <Typography component="div" variant="caption" gutterBottom>
-                      {t('Precio')}
+                      {t(product.name)}
                     </Typography>
                     <Typography
                       component="span"

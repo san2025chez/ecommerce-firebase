@@ -199,11 +199,14 @@ const NavBar = () => {
                     aria-controls="menu-appbar"
                     aria-haspopup="true"
                     onClick={handleOpenNavMenu}
-                    color="inherit"
+                    sx={{
+                      color: anchorElNav ? 'white' : 'white', // Cambia el color cuando el menú está abierto
+                    }}
+                  
 
 
                   >
-                    <MenuIcon />
+                    <MenuIcon style={{color:'white'}}/>
 
                   </IconButton>
                   <Menu
@@ -229,7 +232,8 @@ const NavBar = () => {
                       display: 'flex',
                       flexDirection: 'column',
                       justifyContent: 'center',
-                      backgroundColor: 'rgba(0, 0, 0, 0.5)',
+                      color:'white',
+                      backgroundColor: 'white',
                     }}
 
                     PaperProps={{
@@ -246,7 +250,7 @@ const NavBar = () => {
                       },
                     }}
                     sx={{
-                      display: { xs: 'block', md: 'none' ,top:'0px'},
+                      display: { xs: 'block', md: 'none' ,top:'0px',color:'white'},
                     }}
                   >
                     {pages.map((item) => (

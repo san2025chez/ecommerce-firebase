@@ -1,4 +1,5 @@
 import * as React from 'react';
+import { useEffect } from 'react';
 import { useTheme } from '@mui/material/styles';
 import { Container, Grid } from '@mui/material';
 import Box from '@mui/material/Box';
@@ -12,6 +13,8 @@ import dxn1 from '../assets/banner-frutas.jpg';
 /* import fig1 from '../assets/fruits.jpg'; */
 import fig2 from '../assets/Slider_nightrace.webp';
 import fig3 from '../assets/Slider_Nutre_Deporte_claimer.png';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 const AutoPlaySwipeableViews = autoPlay(SwipeableViews);
 
@@ -74,7 +77,13 @@ const useStyles = makeStyles((theme) => ({
     justifyContent: 'center',
     overflow: 'hidden',
     position: 'relative',
-    backgroundColor: 'rgb(100, 50, 150)',
+    backgroundColor: 'black',
+  },
+  toastContainer: {
+    // Increase specificity if needed (e.g., #toast-container)
+    backgroundColor: '#55BF3B !important', // Use !important with caution
+    width: '100vw',
+    height: '50px', // Adjust height as needed
   },
 }));
 
@@ -86,6 +95,22 @@ function Carousel1() {
   const handleStepChange = (step) => {
     setActiveStep(step);
   };
+  useEffect(() => {
+  
+    toast.options= {
+        position: 'right',
+        autoClose: 10000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        backgroundColor:'#55BF3B !important',
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        toastClassName: classes.toastContainer,
+      };
+      toast.info('¡Envío a domicilio gratis para compras mayores a $10.000!') 
+   
+  }, []); 
 
   return (
     <Container
@@ -128,6 +153,7 @@ function Carousel1() {
           </Grid>
         </Grid>
       </Grid>
+        <ToastContainer />
     </Container>
   );
 }
@@ -136,6 +162,7 @@ function HomePage() {
   return (
     <>
       <Carousel1 />
+    
       <Home />
     </>
   );

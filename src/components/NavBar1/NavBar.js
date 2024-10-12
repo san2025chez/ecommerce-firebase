@@ -29,6 +29,10 @@ const pages = [
     id: 1,
     name: 'Batidos'
   },
+  {
+    id: 1,
+    name: 'Regaleria'
+  },
 
   {
     id: 3,

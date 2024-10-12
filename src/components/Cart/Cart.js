@@ -21,7 +21,7 @@ const useStyles = makeStyles((theme) => ({
 
 export const Cart = () => {
   const { cart, totalCompra, removeItem } = useContext(CartCntext2);
-
+console.log("CANIDAD DE CART", cart.length);
   const isMobile = useMediaQuery('(max-width:600px)');
   const buttonStyle = {
     borderColor: '#6a1b9a',
@@ -39,7 +39,7 @@ export const Cart = () => {
     let productosConFormatoAmigable = productosParaWsp.join('\n');
     productosConFormatoAmigable += '\nTOTAL $' + totalCompra(); // Agrega el total al final del mensaje
     const whatsappMessage = encodeURIComponent(`Hola, me gustaría adquirir los siguientes productos y quiero realizar el pago correspondiente :\n${productosConFormatoAmigable}`);
-    const whatsappUrl = `https://api.whatsapp.com/send?phone=+543883295503&text=${whatsappMessage}`;
+    const whatsappUrl = `https://api.whatsapp.com/send?phone=+543884100409&text=${whatsappMessage}`;
     
     window.location.href = whatsappUrl;
   }
@@ -48,6 +48,8 @@ export const Cart = () => {
   const totalPrecios = cart.reduce((total, product) => total + parseFloat(product.price), 0);
 
   return (
+    cart.length == 0 ?   <Grid container justifyContent="center" style={{ marginTop: "20px", paddingBottom: "10px", minHeight: "50vh" }}>
+    <h2>No tenes productos en tu carrito</h2></Grid> :
 <>
   <Grid container justifyContent="center" style={{ marginTop: "20px", paddingBottom: "10px", minHeight: "50vh" }}>
     <Card sx={{ minWidth: 275 }} container justifyContent="center">

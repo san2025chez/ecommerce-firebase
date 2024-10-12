@@ -6,7 +6,7 @@ export default function WhatsApp() {
     <>
       <a
         target="blank"
-      href="https://wa.me/5493883295503"
+      href="https://wa.me/5493884100409"
         className="whatsapp-button">
         <i className="fab fa-whatsapp"></i>
       </a>

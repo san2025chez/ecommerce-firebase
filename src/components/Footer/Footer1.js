@@ -11,7 +11,7 @@ import "./Footer.scss";
 export default function Footer1() {
   const isMobile = useMediaQuery('(max-width:768px)');
 
-  const whatssaplink = "https://wa.me/5493883295503";
+  const whatssaplink = "https://wa.me/5493884100409";
   const ubicacion = "https://goo.gl/maps/gQMUqC6ugjxxWSd79";
 
   const pages = [

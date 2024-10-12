@@ -10,6 +10,7 @@ import Card from '@mui/material/Card';
 import CardContent from '@mui/material/CardContent';
 import { Grid } from "@material-ui/core";
 import { useMediaQuery } from '@material-ui/core';
+import IconButton from '@mui/material/IconButton';
 
 const useStyles = makeStyles((theme) => ({
   centerDiv: {
@@ -20,7 +21,7 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 export const Cart = () => {
-  const { cart, totalCompra, removeItem } = useContext(CartCntext2);
+  const { cart, totalCompra, removeItem , clear} = useContext(CartCntext2);
 console.log("CANIDAD DE CART", cart.length);
   const isMobile = useMediaQuery('(max-width:600px)');
   const buttonStyle = {
@@ -42,6 +43,12 @@ console.log("CANIDAD DE CART", cart.length);
     const whatsappUrl = `https://api.whatsapp.com/send?phone=+543884100409&text=${whatsappMessage}`;
     
     window.location.href = whatsappUrl;
+
+  
+      if ( window.location.href === whatsappUrl)
+       {
+       clear()
+      }
   }
 
   // Calcular el total de los precios de los productos
@@ -49,7 +56,11 @@ console.log("CANIDAD DE CART", cart.length);
 
   return (
     cart.length == 0 ?   <Grid container justifyContent="center" style={{ marginTop: "20px", paddingBottom: "10px", minHeight: "50vh" }}>
-    <h2>No tenes productos en tu carrito</h2></Grid> :
+    <h2 style={{paddingRight:'20px'}}>No tenes productos en tu carrito</h2>
+    <Link to='/'>
+      <Button style={{ backgroundColor:'#57CA22'}}> Ir al Inicio</Button>
+     
+    </Link></Grid> :
 <>
   <Grid container justifyContent="center" style={{ marginTop: "20px", paddingBottom: "10px", minHeight: "50vh" }}>
     <Card sx={{ minWidth: 275 }} container justifyContent="center">

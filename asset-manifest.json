@@ -1,7 +1,7 @@
 {
   "files": {
     "main.css": "/static/css/main.58da92bb.css",
-    "main.js": "/static/js/main.0f3632b7.js",
+    "main.js": "/static/js/main.cf6905b7.js",
     "static/js/453.0b88fc79.chunk.js": "/static/js/453.0b88fc79.chunk.js",
     "static/media/Slider_Nutre_Deporte_claimer.png": "/static/media/Slider_Nutre_Deporte_claimer.7a1e28e378ee402c91e3.png",
     "static/media/Slider_nightrace.webp": "/static/media/Slider_nightrace.11df38a85b208eb7a7c0.webp",
@@ -17,11 +17,11 @@
     "static/media/roboto-greek-ext-400-normal.woff2": "/static/media/roboto-greek-ext-400-normal.169619821ea93019d1bb.woff2",
     "index.html": "/index.html",
     "main.58da92bb.css.map": "/static/css/main.58da92bb.css.map",
-    "main.0f3632b7.js.map": "/static/js/main.0f3632b7.js.map",
+    "main.cf6905b7.js.map": "/static/js/main.cf6905b7.js.map",
     "453.0b88fc79.chunk.js.map": "/static/js/453.0b88fc79.chunk.js.map"
   },
   "entrypoints": [
     "static/css/main.58da92bb.css",
-    "static/js/main.0f3632b7.js"
+    "static/js/main.cf6905b7.js"
   ]
 }

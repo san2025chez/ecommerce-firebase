@@ -8,6 +8,7 @@ import Typography from '@material-ui/core/Typography';
 import numeral from 'numeral';
 import './item.scss';
 
+
 const useStyles = makeStyles((theme) => ({
   card: {
     width: '100%', // Ancho total
@@ -20,6 +21,7 @@ const useStyles = makeStyles((theme) => ({
     borderRadius: 8,
     boxShadow: '0px 4px 8px rgba(0, 0, 0, 0.1)',
     overflow: 'hidden',
+    position: 'relative', // Posición relativa para que el badge se superponga
     [theme.breakpoints.down('sm')]: {
       maxWidth: 200,
     },
@@ -48,9 +50,25 @@ const useStyles = makeStyles((theme) => ({
   price: {
     marginBottom: '0.5rem',
   },
+  badge: {
+    position: 'absolute',
+    top: 2,
+    right: 4,
+    backgroundColor: 'yellow',
+    color: 'black',
+    borderRadius: '50%',
+    width: 70,
+    height: 70,
+    display: 'flex',
+    justifyContent: 'center',
+    alignItems: 'center',
+    fontSize: '0.9rem',
+    flexDirection: 'column', // Coloca cada palabra en una fila
+  },
 }));
 
 const Item = ({ product }) => {
+  console.log("items",product);
   const classes = useStyles();
   const [expanded, setExpanded] = React.useState(false);
 
@@ -60,7 +78,17 @@ const Item = ({ product }) => {
   return (
     <Link to={`/detalle/${product.id}`}>
       <Card className={classes.card}>
-      <div className={classes.media}>
+        {
+          product.enOferta ?
+          <div className={classes.badge}>
+            <div style={{fontSize: '1.1rem',fontWeight: 'bold'}}>50%</div>
+            <br/>
+            <div style={{fontSize: '1.1rem', fontWeight: 'bold'}}>OFF</div>
+        </div> : <></>
+          
+        }
+       
+        <div className={classes.media}>
           <img
             src={product.img}
             alt={product.productName}
@@ -85,3 +113,4 @@ const Item = ({ product }) => {
 };
 
 export default Item;
+

@@ -240,7 +240,7 @@ const NavBar = () => {
 
                     PaperProps={{
                       style: {
-                        backgroundColor: 'rgba(106, 27, 154, 0.8)',
+                        backgroundColor: 'black',
                         padding: '1rem',
                         display: 'flex',
                         flexDirection: 'column',

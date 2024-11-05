@@ -52,16 +52,21 @@ const useStyles = makeStyles((theme) => ({
   },
   badge: {
     position: 'absolute',
-    top: 2,
+    top: 0,
     right: 4,
+    [theme.breakpoints.down('xs')]: {
+      right: 0,
+      width: 60,
+      height: 60,
+    },
     backgroundColor: 'yellow',
     color: 'black',
     borderRadius: '50%',
-    width: 70,
-    height: 70,
     display: 'flex',
     justifyContent: 'center',
     alignItems: 'center',
+    width: 70,
+    height: 70,
     fontSize: '0.9rem',
     flexDirection: 'column', // Coloca cada palabra en una fila
   },
@@ -82,7 +87,6 @@ const Item = ({ product }) => {
           product.enOferta ?
           <div className={classes.badge}>
             <div style={{fontSize: '1.1rem',fontWeight: 'bold'}}>50%</div>
-            <br/>
             <div style={{fontSize: '1.1rem', fontWeight: 'bold'}}>OFF</div>
         </div> : <></>
           

@@ -8,20 +8,19 @@ import Typography from '@material-ui/core/Typography';
 import numeral from 'numeral';
 import './item.scss';
 
-
 const useStyles = makeStyles((theme) => ({
   card: {
-    width: '100%', // Ancho total
-    maxWidth: 300, // Ancho máximo
-    height: 'auto', // Altura automática para que se ajuste al contenido
+    width: '100%',
+    maxWidth: 300,
+    height: 'auto',
     margin: 'auto',
     display: 'flex',
     flexDirection: 'column',
     alignItems: 'center',
     borderRadius: 8,
-    boxShadow: '0px 4px 8px rgba(0, 0, 0, 0.1)',
+    boxShadow: 'none', // Remove shadow to eliminate border effect
     overflow: 'hidden',
-    position: 'relative', // Posición relativa para que el badge se superponga
+    position: 'relative',
     [theme.breakpoints.down('sm')]: {
       maxWidth: 200,
     },
@@ -31,17 +30,17 @@ const useStyles = makeStyles((theme) => ({
   },
   media: {
     paddingTop: '10px',
-    width: '100%', // Asegúrate de que ocupa el ancho completo
-    height: '200px', // Altura fija para mantener la consistencia
-    display: 'flex', // Habilita flexbox
-    justifyContent: 'center', // Centra horizontalmente
-    alignItems: 'center', // Centra verticalmente
-    overflow: 'hidden', // Oculta cualquier contenido desbordante
+    width: '100%',
+    height: '200px',
+    display: 'flex',
+    justifyContent: 'center',
+    alignItems: 'center',
+    overflow: 'hidden',
   },
   img: {
-    maxWidth: '100%', // Asegura que la imagen no exceda el ancho del contenedor
-    maxHeight: '100%', // Asegura que la imagen no exceda la altura del contenedor
-    objectFit: 'cover', // Mantiene la relación de aspecto de la imagen
+    maxWidth: '100%',
+    maxHeight: '100%',
+    objectFit: 'cover',
   },
   header: {
     textAlign: 'center',
@@ -55,7 +54,7 @@ const useStyles = makeStyles((theme) => ({
     top: 0,
     right: 4,
     [theme.breakpoints.down('xs')]: {
-      right: -1,
+      right: 0,
       width: 60,
       height: 60,
     },
@@ -68,16 +67,14 @@ const useStyles = makeStyles((theme) => ({
     width: 70,
     height: 70,
     fontSize: '0.9rem',
-    flexDirection: 'column', // Coloca cada palabra en una fila
+    flexDirection: 'column',
   },
 }));
 
 const Item = ({ product }) => {
-  console.log("items",product);
+  console.log("items", product);
   const classes = useStyles();
-  const [expanded, setExpanded] = React.useState(false);
 
-  // Formatear el precio con puntos como separadores de miles
   const formattedPrice = numeral(product.price).format('$0,0').replace(/,/g, '.');
 
   return (
@@ -88,10 +85,8 @@ const Item = ({ product }) => {
           <div className={classes.badge}>
             <div style={{fontSize: '1.1rem',fontWeight: 'bold'}}>50%</div>
             <div style={{fontSize: '1.1rem', fontWeight: 'bold'}}>OFF</div>
-        </div> : <></>
-          
+          </div> : null
         }
-       
         <div className={classes.media}>
           <img
             src={product.img}
@@ -104,11 +99,9 @@ const Item = ({ product }) => {
           disableTypography
           title={<Typography variant="body2" color="black">{product.productName}</Typography>}
           subheader={
-            <>
-              <Typography variant="body2" className={classes.price}>
-                {formattedPrice}
-              </Typography>
-            </>
+            <Typography variant="body2" className={classes.price}>
+              {formattedPrice}
+            </Typography>
           }
         />
       </Card>

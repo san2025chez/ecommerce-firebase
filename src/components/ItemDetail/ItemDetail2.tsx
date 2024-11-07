@@ -238,6 +238,9 @@ export const ItemDetail2: FC<ProductBodyProps> = ({ product }) => {
     setOption2(event.target.value);
   };
 
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
   /* const handlePrevClick = () => {
     setCurrentImageIndex((prevIndex) =>
       prevIndex === 0 ? product.images.length - 1 : prevIndex - 1

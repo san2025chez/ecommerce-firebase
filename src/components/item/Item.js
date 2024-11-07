@@ -7,6 +7,7 @@ import CardMedia from '@material-ui/core/CardMedia';
 import Typography from '@material-ui/core/Typography';
 import numeral from 'numeral';
 import './item.scss';
+import CircularProgress from '@material-ui/core/CircularProgress';
 
 const useStyles = makeStyles((theme) => ({
   card: {
@@ -69,10 +70,24 @@ const useStyles = makeStyles((theme) => ({
     fontSize: '0.9rem',
     flexDirection: 'column',
   },
+  spinner: {
+    position: 'absolute',
+    top: '50%',
+    left: '50%',
+    transform: 'translate(-50%, -50%)',
+    zIndex: 1,
+  },
+  loading: {
+    position: 'relative',
+    display: 'flex',
+    justifyContent: 'center',
+    alignItems: 'center',
+    height: '100%',
+    width: '100%',
+  },
 }));
 
-const Item = ({ product }) => {
-  console.log("items", product);
+const Item = ({ product, loading }) => {
   const classes = useStyles();
 
   const formattedPrice = numeral(product.price).format('$0,0').replace(/,/g, '.');
@@ -80,34 +95,53 @@ const Item = ({ product }) => {
   return (
     <Link to={`/detalle/${product.id}`}>
       <Card className={classes.card}>
-        {
-          product.enOferta ?
-          <div className={classes.badge}>
-            <div style={{fontSize: '1.1rem',fontWeight: 'bold'}}>50%</div>
-            <div style={{fontSize: '1.1rem', fontWeight: 'bold'}}>OFF</div>
-          </div> : null
-        }
-        <div className={classes.media}>
-          <img
-            src={product.img}
-            alt={product.productName}
-            className={classes.img}
-          />
-        </div>
-        <CardHeader
-          className={classes.header}
-          disableTypography
-          title={<Typography variant="body2" color="black">{product.productName}</Typography>}
-          subheader={
-            <Typography variant="body2" className={classes.price}>
-              {formattedPrice}
+        {loading ? (
+          <div className={classes.loading}>
+            <CircularProgress className={classes.spinner} />
+            <Typography variant="body2" color="black">
+              Cargando...
             </Typography>
-          }
-        />
+          </div>
+        ) : (
+          <div>
+            {product.enOferta ? (
+              <div className={classes.badge}>
+                <div style={{ fontSize: '1.1rem', fontWeight: 'bold' }}>
+                  50%
+                </div>
+                <div style={{ fontSize: '1.1rem', fontWeight: 'bold' }}>
+                  OFF
+                </div>
+              </div>
+            ) : null}
+            <div className={classes.media}>
+              <img
+                src={product.img}
+                alt={product.productName}
+                className={classes.img}
+              />
+            </div>
+            <CardHeader
+              className={classes.header}
+              disableTypography
+              title={
+                <Typography variant="body2" color="black">
+                  {product.productName}
+                </Typography>
+              }
+              subheader={
+                <Typography variant="body2" className={classes.price}>
+                  {formattedPrice}
+                </Typography>
+              }
+            />
+          </div>
+        )}
       </Card>
     </Link>
   );
 };
 
 export default Item;
+
 

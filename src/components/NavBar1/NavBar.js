@@ -25,10 +25,7 @@ import AddCircleOutlineIcon from '@mui/icons-material/AddCircleOutline';
 
 const pages = [
  
-  {
-    id: 1,
-    name: 'Batidos'
-  },
+ 
   {
     id: 2,
     name: 'Regaleria'
@@ -47,10 +44,7 @@ const pages = [
     name: 'Verduras'
   },
   
-  {
-    id: 6,
-    name: 'Ofertas'
-  }
+ 
 ];
 const settings = [
   {

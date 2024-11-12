@@ -12,31 +12,36 @@ import CircularProgress from '@material-ui/core/CircularProgress';
 const useStyles = makeStyles((theme) => ({
   card: {
     width: '100%',
-    maxWidth: 300,
+    maxWidth: 350,
     height: 'auto',
-    margin: 'auto',
+    margin: '20px auto',
     display: 'flex',
     flexDirection: 'column',
     alignItems: 'center',
-    borderRadius: 8,
-    boxShadow: 'none', // Remove shadow to eliminate border effect
+    borderRadius: 12,
+    boxShadow: '0 4px 8px rgba(0, 0, 0, 0.1)',
     overflow: 'hidden',
     position: 'relative',
+    backgroundColor: '#fff',
+    transition: 'transform 0.3s ease-in-out',
+    '&:hover': {
+      transform: 'scale(1.02)',
+    },
     [theme.breakpoints.down('sm')]: {
-      maxWidth: 200,
+      maxWidth: 280,
     },
     [theme.breakpoints.down('xs')]: {
-      maxWidth: 180,
+      maxWidth: 220,
     },
   },
   media: {
-    paddingTop: '10px',
     width: '100%',
-    height: '200px',
+    height: '250px',
     display: 'flex',
     justifyContent: 'center',
     alignItems: 'center',
     overflow: 'hidden',
+    backgroundColor: '#f7f7f7',
   },
   img: {
     maxWidth: '100%',
@@ -45,30 +50,28 @@ const useStyles = makeStyles((theme) => ({
   },
   header: {
     textAlign: 'center',
-    padding: '8px 16px',
+    padding: '12px 20px',
   },
   price: {
     marginBottom: '0.5rem',
+    color: '#000', // Changed the color to black
+    fontWeight: 'bold',
   },
   badge: {
     position: 'absolute',
     top: 0,
-    right: 4,
-    [theme.breakpoints.down('xs')]: {
-      right: 0,
-      width: 60,
-      height: 60,
-    },
-    backgroundColor: 'yellow',
-    color: 'black',
+    right: 0,
+    backgroundColor: '#ff5252',
+    color: '#fff',
     borderRadius: '50%',
     display: 'flex',
     justifyContent: 'center',
     alignItems: 'center',
-    width: 70,
-    height: 70,
-    fontSize: '0.9rem',
+    width: 60,
+    height: 60,
+    fontSize: '0.8rem',
     flexDirection: 'column',
+    boxShadow: '0 4px 8px rgba(0, 0, 0, 0.1)',
   },
   spinner: {
     position: 'absolute',
@@ -84,6 +87,7 @@ const useStyles = makeStyles((theme) => ({
     alignItems: 'center',
     height: '100%',
     width: '100%',
+    backgroundColor: '#f7f7f7',
   },
 }));
 
@@ -93,18 +97,18 @@ const Item = ({ product, loading }) => {
   const formattedPrice = numeral(product.price).format('$0,0').replace(/,/g, '.');
 
   return (
-    <Link to={`/detalle/${product.id}`}>
+    <Link to={`/detalle/${product.id}`} style={{ textDecoration: 'none' }}>
       <Card className={classes.card}>
         {loading ? (
           <div className={classes.loading}>
             <CircularProgress className={classes.spinner} />
-            <Typography variant="body2" color="black">
+            <Typography variant="body2" color="textSecondary">
               Cargando...
             </Typography>
           </div>
         ) : (
           <div>
-            {product.enOferta ? (
+            {product.enOferta && (
               <div className={classes.badge}>
                 <div style={{ fontSize: '1.1rem', fontWeight: 'bold' }}>
                   50%
@@ -113,7 +117,7 @@ const Item = ({ product, loading }) => {
                   OFF
                 </div>
               </div>
-            ) : null}
+            )}
             <div className={classes.media}>
               <img
                 src={product.img}
@@ -125,7 +129,7 @@ const Item = ({ product, loading }) => {
               className={classes.header}
               disableTypography
               title={
-                <Typography variant="body2" color="black">
+                <Typography variant="body1" color="textPrimary">
                   {product.productName}
                 </Typography>
               }
@@ -143,5 +147,4 @@ const Item = ({ product, loading }) => {
 };
 
 export default Item;
-
 

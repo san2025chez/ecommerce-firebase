@@ -83,7 +83,7 @@ const classes = useStyles();
             {cart.map((product) => (
               <div key={product.id} className="container cart">
                 <div className="cart__detail container">
-                  <div className="cart__img cart__items">
+                  <div style={{backgroundColor:'white'}} className="cart__img cart__items">
                     <img
                       src={product.img}
                       alt={`img-${product.id}`}

@@ -81,8 +81,8 @@ const classes = useStyles();
             </div>}
           <div>
             {cart.map((product) => (
-              <div key={product.id} className="container cart">
-                <div className="cart__detail container">
+              <div  style={{backgroundColor:'white'}} key={product.id} className="container cart">
+                <div style={{backgroundColor:'white'}} className="cart__detail container">
                   <div style={{backgroundColor:'white'}} className="cart__img cart__items">
                     <img
                       src={product.img}
@@ -154,4 +154,5 @@ const classes = useStyles();
 
   );
 }
+
 

@@ -18,11 +18,15 @@ const useStyles = makeStyles((theme) => ({
     alignItems: 'center',
     height: '100vh',
   },
+  card: {
+    backgroundColor: 'white'
+  }
 }));
 
 export const Cart = () => {
   const { cart, totalCompra, removeItem , clear} = useContext(CartCntext2);
 console.log("CANIDAD DE CART", cart.length);
+const classes = useStyles();
   const isMobile = useMediaQuery('(max-width:600px)');
   const buttonStyle = {
     borderColor: '#6a1b9a',
@@ -63,7 +67,8 @@ console.log("CANIDAD DE CART", cart.length);
     </Link></Grid> :
 <>
   <Grid container justifyContent="center" style={{ marginTop: "20px", paddingBottom: "10px", minHeight: "50vh" }}>
-    <Card sx={{ minWidth: 275 }} container justifyContent="center">
+    <Card sx={{ minWidth: 275 }} className={classes.card} container justifyContent="center">
+   
       <CardContent justifyContent="center">
 
         <div id="CartList" className="cart container">
@@ -149,3 +154,4 @@ console.log("CANIDAD DE CART", cart.length);
 
   );
 }
+

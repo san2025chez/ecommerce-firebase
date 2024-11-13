@@ -41,7 +41,7 @@ const useStyles = makeStyles((theme) => ({
     justifyContent: 'center',
     alignItems: 'center',
     overflow: 'hidden',
-    backgroundColor: '#f7f7f7',
+    backgroundColor: 'white',
   },
   img: {
     maxWidth: '100%',

@@ -50,7 +50,7 @@ const Item = styled(Paper)(({ theme }) => ({
 }));
 export const ItemDetail = ({ product }) => {
   const classes = useStyles();
-  console.log("item detail");
+  console.log("item detail",product);
   console.log("producto para cart", { ...product });
 
 

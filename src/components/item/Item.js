@@ -53,9 +53,10 @@ const useStyles = makeStyles((theme) => ({
     padding: '12px 20px',
   },
   price: {
-    marginBottom: '0.5rem',
+   /*  marginBottom: '0.5rem', */
     color: '#000', // Changed the color to black
     fontWeight: 'bold',
+    fontSize: '1rem'
   },
   badge: {
     position: 'absolute',
@@ -108,7 +109,7 @@ const Item = ({ product, loading }) => {
           </div>
         ) : (
           <div>
-            {product.enOferta && (
+          {/*   {product.enOferta && (
               <div className={classes.badge}>
                 <div style={{ fontSize: '1.1rem', fontWeight: 'bold' }}>
                   50%
@@ -117,7 +118,7 @@ const Item = ({ product, loading }) => {
                   OFF
                 </div>
               </div>
-            )}
+            )} */}
             <div className={classes.media}>
               <img
                 src={product.img}
@@ -128,14 +129,26 @@ const Item = ({ product, loading }) => {
             <CardHeader
               className={classes.header}
               disableTypography
-              title={
-                <Typography variant="body1" color="textPrimary">
-                  {product.productName}
-                </Typography>
+             
+             title={
+                <div style={{display: 'flex', flexDirection: 'row', alignItems: 'center', justifyContent: 'center'}}>
+
+                  <Typography variant="body2" className={classes.price}>
+                    {formattedPrice}
+                  </Typography>
+                  {product.enOferta && (
+                    <Typography
+                      variant="body2"
+                      style={{ fontSize: '0.8rem', fontWeight: 'lighter', marginLeft: '0.9rem', color:'#00a650' }}
+                    >
+                      20% OFF
+                    </Typography>
+                  )}
+                </div>
               }
               subheader={
-                <Typography variant="body2" className={classes.price}>
-                  {formattedPrice}
+                <Typography variant="body1" color="textPrimary">
+                  {product.productName}
                 </Typography>
               }
             />
@@ -147,4 +160,7 @@ const Item = ({ product, loading }) => {
 };
 
 export default Item;
+
+
+
 

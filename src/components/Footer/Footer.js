@@ -38,19 +38,19 @@ export default function Footer(props) {
   const pages = [
     {
       id: 1,
-      name: 'Cajas'
+      name: 'Regaleria'
     },
     {
       id: 2,
-      name: 'Botellines'
+      name: 'Productos'
     },
     {
       id: 3,
-      name: 'Cosmeticos'
+      name: 'Frutas'
     },
     {
       id: 4,
-      name: 'DXN'
+      name: 'Verduras'
     },
   ];
 

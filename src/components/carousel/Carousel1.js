@@ -141,7 +141,9 @@ function HomePage() {
   return (
     <>
       <Carousel1 />
-    
+
+      <div style={{ margin: '20px 0' }}></div>
+      
       <Home />
     </>
   );

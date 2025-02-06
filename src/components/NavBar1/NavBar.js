@@ -43,6 +43,14 @@ const pages = [
     id: 5,
     name: 'Verduras'
   },
+  {
+    id: 6,
+    name: 'Novedades'
+  },
+  {
+    id: 6,
+    name: 'Utiles Escolares'
+  },
   
  
 ];

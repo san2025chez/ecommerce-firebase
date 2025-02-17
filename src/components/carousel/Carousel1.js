@@ -77,6 +77,7 @@ const useStyles = makeStyles((theme) => ({
     overflow: 'hidden',
     position: 'relative',
     backgroundColor: 'black',
+    overflowX: 'hidden', //agregue esta linea
   },
 
 }));
@@ -150,3 +151,4 @@ function HomePage() {
 }
 
 export default HomePage;
+

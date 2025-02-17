@@ -141,7 +141,7 @@ const classes = useStyles();
         </div> */}
         <div className="cart__buyButton" style={{ width: '50%' }}>
           <Button onClick={() => finalizarCompra()} variant="outlined" style={{ ...buttonStyle, width: '100%' }}>
-            PEDIR POR WHATSSAP
+            COMPRAR
           </Button>
         </div>
       </div>

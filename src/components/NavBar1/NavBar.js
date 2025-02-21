@@ -49,7 +49,7 @@ const pages = [
   },
   {
     id: 7,
-    name: 'Utiles Escolares'
+    name: 'Utiles'
   },
   
  

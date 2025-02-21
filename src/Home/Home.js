@@ -230,9 +230,11 @@ const Home = () => {
                     <Typography variant="caption" className={classes.iconLabel}>Novedades</Typography>
                   </div>
                   <div className={classes.iconContainer}>
+                  <Link to={`/categoria/Utiles`}>
                     <IconButton className={classes.iconButton} onClick={() => handleCategoryClick('nutricionales')}>
                       <img src={utiles} alt="Nutricionales" className={classes.iconImages} />
                     </IconButton>
+                    </Link>
                     <Typography variant="caption" className={classes.iconLabel}>Utiles Escolares</Typography>
                   </div>
                 </div>

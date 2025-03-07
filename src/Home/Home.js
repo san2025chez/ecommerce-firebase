@@ -114,6 +114,8 @@ const useStyles = makeStyles((theme) => ({
     alignItems: 'center',
     padding: theme.spacing(1),
     backgroundColor: 'transparent',
+    border: 'none',
+    boxShadow: 'none',
     transition: 'all 0.3s ease',
     '&:hover': {
       transform: 'translateY(-5px)',

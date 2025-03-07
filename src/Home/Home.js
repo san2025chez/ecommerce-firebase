@@ -140,7 +140,7 @@ const useStyles = makeStyles((theme) => ({
     display: 'block',
     fontSize: '1rem',
     [theme.breakpoints.down('sm')]: {
-      fontSize: '0.6rem',
+      fontSize: '0.7rem',
     },
   },
   sectionTitle: {

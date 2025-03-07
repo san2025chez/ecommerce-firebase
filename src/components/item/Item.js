@@ -24,14 +24,14 @@ import { CartContext } from '../../context/CartContext';
 const useStyles = makeStyles((theme) => ({
   card: {
     width: '100%',
-    maxWidth: 240, // Reducido aún más para asegurar que quepan 5-6 items por fila
+    maxWidth: 240,
     height: '100%',
     display: 'flex',
     flexDirection: 'column',
     position: 'relative',
     borderRadius: 16,
     overflow: 'hidden',
-    backgroundColor: '#fff',
+    backgroundColor: '#ffffff',
     transition: 'all 0.3s cubic-bezier(0.4, 0, 0.2, 1)',
     '&:hover': {
       transform: 'translateY(-8px)',
@@ -41,12 +41,13 @@ const useStyles = makeStyles((theme) => ({
       maxWidth: '100%',
       borderRadius: 8,
       margin: 0,
+      backgroundColor: '#ffffff',
     },
   },
   mediaContainer: {
     position: 'relative',
     paddingTop: '100%',
-    backgroundColor: '#f5f5f5',
+    backgroundColor: '#ffffff',
   },
   media: {
     position: 'absolute',

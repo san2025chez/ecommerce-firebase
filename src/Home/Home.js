@@ -86,12 +86,14 @@ const useStyles = makeStyles((theme) => ({
   },
   categoryGrid: {
     display: 'grid',
-    gridTemplateColumns: 'repeat(auto-fit, minmax(150px, 1fr))',
-    gap: theme.spacing(3),
+    gridTemplateColumns: 'repeat(auto-fit, minmax(90px, 1fr))',
+    gap: theme.spacing(2),
+    justifyItems: 'center',
+    alignItems: 'start',
     padding: theme.spacing(2),
     [theme.breakpoints.down('sm')]: {
-      gap: theme.spacing(2),
-      gridTemplateColumns: 'repeat(auto-fit, minmax(100px, 1fr))',
+      gridTemplateColumns: 'repeat(auto-fit, minmax(80px, 1fr))',
+      gap: theme.spacing(1),
     },
   },
   categoryCard: {
@@ -114,6 +116,7 @@ const useStyles = makeStyles((theme) => ({
     display: 'flex',
     alignItems: 'center',
     justifyContent: 'center',
+    borderRadius: '50%',
     '&:hover': {
       backgroundColor: '#e9ecef',
     },
@@ -133,9 +136,15 @@ const useStyles = makeStyles((theme) => ({
     marginTop: theme.spacing(1),
     fontWeight: 500,
     color: theme.palette.text.primary,
+    textAlign: 'center',
+    display: 'block',
+    fontSize: '1rem',
+    [theme.breakpoints.down('sm')]: {
+      fontSize: '0.6rem',
+    },
   },
   sectionTitle: {
-    fontSize: '1.8rem',
+    fontSize: '1.7rem',
     fontWeight: 600,
     marginBottom: theme.spacing(4),
     position: 'relative',
@@ -149,10 +158,14 @@ const useStyles = makeStyles((theme) => ({
       backgroundColor: theme.palette.primary.main,
       borderRadius: '2px',
     },
+    [theme.breakpoints.down('sm')]: {
+      fontSize: '1.5rem',
+    },
   },
   offersContainer: {
     backgroundColor: 'white',
     borderRadius: '20px',
+    paddingTop: theme.spacing(4),
     padding: theme.spacing(4),
     marginBottom: theme.spacing(6),
     boxShadow: '0 4px 20px rgba(0,0,0,0.08)',
@@ -276,14 +289,14 @@ const Home = () => {
               transition={{ delay: 0.4 }}
             >
               <section className={classes.offersContainer}>
-                <Typography variant="h2" className={classes.sectionTitle}>
+                <Typography variant="h3" className={classes.sectionTitle}>
                   Ofertas Especiales
                 </Typography>
                 <ItemList items={offers} />
               </section>
 
               <section className={classes.productsContainer}>
-                <Typography variant="h2" className={classes.sectionTitle}>
+                <Typography variant="h3" className={classes.sectionTitle}>
                   Productos Destacados
                 </Typography>
                 <ItemList items={items} />

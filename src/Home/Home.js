@@ -33,6 +33,10 @@ const useStyles = makeStyles((theme) => ({
     backgroundColor: '#f5f5f7',
     paddingTop: theme.spacing(4),
     paddingBottom: theme.spacing(8),
+    [theme.breakpoints.down('sm')]: {
+      paddingTop: 0,
+      paddingBottom: theme.spacing(4),
+    },
   },
   container: {
     width: '100%',
@@ -103,22 +107,27 @@ const useStyles = makeStyles((theme) => ({
     },
   },
   iconButton: {
-    width: '80px',
-    height: '80px',
+    width: '90px',
+    height: '90px',
     marginBottom: theme.spacing(1),
     backgroundColor: '#f8f9fa',
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'center',
     '&:hover': {
       backgroundColor: '#e9ecef',
     },
     [theme.breakpoints.down('sm')]: {
-      width: '60px',
-      height: '60px',
+      width: '80px',
+      height: '80px',
     },
   },
   iconImages: {
     width: '60%',
     height: '60%',
     objectFit: 'contain',
+    display: 'block',
+    margin: 'auto',
   },
   iconLabel: {
     marginTop: theme.spacing(1),
@@ -147,6 +156,10 @@ const useStyles = makeStyles((theme) => ({
     padding: theme.spacing(4),
     marginBottom: theme.spacing(6),
     boxShadow: '0 4px 20px rgba(0,0,0,0.08)',
+    [theme.breakpoints.down('sm')]: {
+      padding: 0,
+      borderRadius: '10px',
+    },
   },
   productsContainer: {
     backgroundColor: 'white',
@@ -231,26 +244,9 @@ const Home = () => {
           </Fade>
         ) : (
           <>
-            <motion.div 
-              className={classes.heroSection}
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.8 }}
-            >
-              <div className={classes.heroContent}>
-                <Typography variant="h1" className={classes.heroTitle}>
-                  Bienvenido a tu Tienda Online
-                </Typography>
-                <Typography variant="h2" className={classes.heroSubtitle}>
-                  Descubre productos frescos y de calidad
-                </Typography>
-              </div>
-            </motion.div>
+            
 
             <section className={classes.categoriesSection}>
-              <Typography variant="h2" className={classes.sectionTitle}>
-                Categorías
-              </Typography>
               <Grid container className={classes.categoryGrid}>
                 {categories.map((category, index) => (
                   <motion.div

@@ -80,8 +80,8 @@ const useStyles = makeStyles((theme) => ({
   },
   price: {
     fontSize: '1.4rem',
-    fontWeight: 700,
-    color: theme.palette.primary.main,
+    fontWeight: 500,
+    color: theme.palette.text.primary,
     marginBottom: theme.spacing(1),
   },
   badge: {
@@ -238,13 +238,13 @@ const Item = ({ product, loading = false }) => {
               >
                 <FavoriteIcon />
               </IconButton>
-              <IconButton 
+              {/* <IconButton 
                 className={classes.iconButton} 
                 size="small"
                 onClick={(e) => e.preventDefault()}
               >
                 <ShareIcon />
-              </IconButton>
+              </IconButton> */}
             </Box>
             <IconButton 
               className={classes.iconButton} 

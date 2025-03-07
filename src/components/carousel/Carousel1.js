@@ -65,11 +65,11 @@ const useStyles = makeStyles((theme) => ({
     width: '100%',
     height: '70vh',
     overflow: 'hidden',
-    borderRadius: '20px',
+    borderRadius: '0px',
     boxShadow: '0 4px 20px rgba(0,0,0,0.1)',
     [theme.breakpoints.down('sm')]: {
-      height: '20vh',
-      borderRadius: '12px',
+      height: '25vh',
+      borderRadius: '0px',
       marginBottom: theme.spacing(2)
     }
   },
@@ -208,7 +208,7 @@ function Carousel1() {
                     src={slide.imagen}
                     alt={slide.title}
                   />
-                  <Fade in={activeStep === index} timeout={1000}>
+                 {/*  <Fade in={activeStep === index} timeout={1000}>
                     <Box className={classes.slideContent}>
                       <Typography 
                         variant="h1" 
@@ -241,7 +241,7 @@ function Carousel1() {
                         {slide.subtitle}
                       </Typography>
                     </Box>
-                  </Fade>
+                  </Fade> */}
                 </>
               ) : null}
             </div>

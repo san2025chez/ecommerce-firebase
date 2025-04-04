@@ -219,49 +219,100 @@ const NavBar = () => {
                     keepMounted
                     transformOrigin={{
                       vertical: 'top',
-                      horizontal: 'center',
+                      horizontal: 'right',
                     }}
                     open={Boolean(anchorElNav)}
                     onClose={handleCloseNavMenu}
                     anchorOrigin={{
                       vertical: 'top',
-                      horizontal: 'center',
+                      horizontal: 'right',
                     }}
                     style={{
                       position: 'fixed',
-                    maxWidth:'100%',
-                    maxHeight:'100%',
+                      maxWidth: '100%',
+                      maxHeight: '100%',
                       width: '100%',
                       height: '100%',
-                      display: 'flex',
-                      flexDirection: 'column',
-                      justifyContent: 'center',
-                      color:'white',
-                      backgroundColor: 'white',
+                      top: 0,
+                      left: 0,
+                      right: 0,
                     }}
-
                     PaperProps={{
                       style: {
                         backgroundColor: 'black',
-                        padding: '1rem',
+                        padding: '0',
                         display: 'flex',
                         flexDirection: 'column',
-                        alignItems: 'center',
                         width: '100%',
                         height: '100%',
-                        maxWidth:'100%',
-                        maxHeight:'100%',
+                        maxWidth: '100%',
+                        maxHeight: '100%',
+                        position: 'absolute',
+                        left: 0,
+                        top: 0,
+                        right: 0,
+                        bottom: 0,
+                        borderRadius: 0,
                       },
                     }}
                     sx={{
-                      display: { xs: 'block', md: 'none' ,top:'0px',color:'white'},
+                      display: { xs: 'block', md: 'none' },
                     }}
                   >
-                    {pages.map((item) => (
-                      <Link to={`/categoria/${item.name}`}><MenuItem key={item.id} onClick={handleCloseNavMenu}>
-                        <Typography textAlign="center" className="mobile-menu-item" style={{ fontSize: '1.2em' }}>{item.name}</Typography>
-                      </MenuItem></Link>
-                    ))}
+                    <Box sx={{ 
+                      padding: '16px', 
+                      borderBottom: '1px solid #333',
+                      display: 'flex',
+                      alignItems: 'center',
+                      justifyContent: 'space-between',
+                    }}>
+                      <Typography variant="h6" sx={{ fontWeight: 'bold', color: 'white' }}>
+                        Categorías
+                      </Typography>
+                      <IconButton 
+                        size="medium" 
+                        onClick={handleCloseNavMenu}
+                        sx={{ color: 'white' }}
+                      >
+                        <MenuIcon />
+                      </IconButton>
+                    </Box>
+
+                    <Box sx={{ 
+                      display: 'flex', 
+                      flexDirection: 'column',
+                      flex: 1,
+                      overflowY: 'auto'
+                    }}>
+                      {pages.map((item) => (
+                        <Link 
+                          to={`/categoria/${item.name}`} 
+                          key={item.id} 
+                          style={{ textDecoration: 'none' }}
+                        >
+                          <MenuItem 
+                            onClick={handleCloseNavMenu}
+                            sx={{
+                              padding: '16px',
+                              borderBottom: '1px solid #333',
+                              '&:hover': {
+                                backgroundColor: '#333'
+                              }
+                            }}
+                          >
+                            <Typography sx={{ 
+                              color: 'white', 
+                              fontSize: '18px', 
+                              width: '100%',
+                              textAlign: 'center',
+                              fontWeight: 500
+                            }}>
+                              {item.name}
+                            </Typography>
+                          </MenuItem>
+                        </Link>
+                      ))}
+                    </Box>
                   </Menu>
                   <Tooltip title="Open settings">
                     <CartWidget fontSize="small" />
@@ -344,4 +395,3 @@ const NavBar = () => {
   );
 };
 export default NavBar;
-

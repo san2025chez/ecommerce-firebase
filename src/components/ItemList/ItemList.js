@@ -1,124 +1,123 @@
-import React, { useState, useEffect } from 'react';
-import Item from '../item/Item';
+import React, { useState, useEffect, useContext } from 'react';
 import { Grid, Container, Typography, Box, useTheme } from '@mui/material';
-import { makeStyles } from '@material-ui/core/styles';
+import { styled } from '@mui/material/styles';
 import useMediaQuery from '@mui/material/useMediaQuery';
+import ProductCard from '../ProductCard/ProductCard';
+import { CartCntext2 } from '../../context/CartCntext2';
+import { useNotification } from '../../context/NotificationContext';
 
-const useStyles = makeStyles((theme) => ({
-  root: {
-    width: '100%',
-    padding: theme.spacing(2),
-    backgroundColor: '#f8f9fa',
-    [theme.breakpoints.down('sm')]: {
-      padding: theme.spacing(0.5),
-    }
-  },
-  gridContainer: {
-    margin: '0 auto',
-    width: '100%',
-    maxWidth: '1920px', 
-    [theme.breakpoints.up('xl')]: {
-      maxWidth: '95%', 
-    }
-  },
-  gridItem: {
-    display: 'flex',
-    justifyContent: 'center',
-    transition: 'transform 0.3s ease-in-out',
-    [theme.breakpoints.down('sm')]: {
-      padding: theme.spacing(0.5), 
-    },
-    '&:hover': {
-      transform: 'translateY(-5px)',
-    }
-  },
-  noProducts: {
-    textAlign: 'center',
-    padding: theme.spacing(4),
-    backgroundColor: '#fff',
-    borderRadius: theme.spacing(1),
-    boxShadow: '0 2px 8px rgba(0,0,0,0.1)',
-    [theme.breakpoints.down('sm')]: {
-      padding: theme.spacing(2),
-    },
+const ProductGrid = styled(Grid)(({ theme }) => ({
+  margin: '0 auto',
+  width: '100%',
+  maxWidth: '1920px',
+  [theme.breakpoints.up('xl')]: {
+    maxWidth: '95%',
   }
 }));
 
+const ProductGridItem = styled(Grid)(({ theme }) => ({
+  padding: theme.spacing(1.5),
+  [theme.breakpoints.down('sm')]: {
+    padding: theme.spacing(1),
+  }
+}));
+
+const NoProductsMessage = styled(Box)(({ theme }) => ({
+  textAlign: 'center',
+  padding: theme.spacing(4),
+  backgroundColor: '#fff',
+  borderRadius: theme.shape.borderRadius,
+  boxShadow: '0 1px 2px 0 rgba(0,0,0,.15)',
+  [theme.breakpoints.down('sm')]: {
+    padding: theme.spacing(2),
+  },
+}));
+
+const LoadingContainer = styled(Box)(({ theme }) => ({
+  display: 'flex',
+  justifyContent: 'center',
+  width: '100%',
+  minHeight: '300px',
+  padding: theme.spacing(4),
+}));
+
 export const ItemList = ({ items = [], loading = false }) => {
-  const classes = useStyles();
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down('sm'));
   const [isLoading, setIsLoading] = useState(true);
+  const cartContext = useContext(CartCntext2);
+  const { showCartNotification } = useNotification();
 
   useEffect(() => {
-    if (items.length > 0) {
+    if (!loading && items.length > 0) {
       setIsLoading(false);
+    } else if (loading) {
+      setIsLoading(true);
     }
-  }, [items]);
+  }, [loading, items]);
 
-  const loadingArray = Array(12).fill(null); 
+  const handleAddToCart = (product) => {
+    if (cartContext && cartContext.addItem) {
+      cartContext.addItem({
+        ...product,
+        quantity: 1
+      });
+      showCartNotification(product);
+    }
+  };
 
-  if (!items || items.length === 0) {
-    return (
-      <Container maxWidth="lg" className={classes.root}>
-        <Box className={classes.noProducts}>
-          <Typography variant="h5" component="h2" gutterBottom>
-            No hay productos disponibles
-          </Typography>
-          <Typography variant="body1" color="textSecondary">
-            Por favor, intenta más tarde o revisa los filtros aplicados.
-          </Typography>
-        </Box>
-      </Container>
-    );
-  }
+  const renderSkeletonCards = () => {
+    return Array(8)
+      .fill()
+      .map((_, index) => (
+        <ProductGridItem item xs={6} sm={6} md={4} lg={3} key={`skeleton-${index}`}>
+          <ProductCard loading={true} />
+        </ProductGridItem>
+      ));
+  };
 
   return (
-    <div className={classes.root}>
-      <Container 
-        maxWidth={false} 
-        disableGutters={true}
-        sx={{ 
-          [theme.breakpoints.down('sm')]: {
-            padding: 0
-          }
-        }}
-      >
-        <Grid 
-          container 
-          spacing={2}
-          className={classes.gridContainer}
-        >
-          {isLoading
-            ? loadingArray.map((_, index) => (
-                <Grid 
-                  item 
-                  xs={6}    // 2 columnas en móvil
-                  sm={4}    // 3 columnas en tablet
-                  md={2.4}  // 5 columnas en desktop mediano
-                  lg={2}    // 6 columnas en desktop grande
-                  key={index}
-                  className={classes.gridItem}
-                >
-                  <Item loading={true} />
-                </Grid>
-              ))
-            : items.map((item) => (
-                <Grid 
-                  item 
-                  xs={6}    // 2 columnas en móvil
-                  sm={4}    // 3 columnas en tablet
-                  md={2.4}  // 5 columnas en desktop mediano
-                  lg={2}    // 6 columnas en desktop grande
-                  key={item.id}
-                  className={classes.gridItem}
-                >
-                  <Item product={item} loading={false} />
-                </Grid>
-              ))}
-        </Grid>
-      </Container>
-    </div>
+    <Container maxWidth={false} disableGutters>
+      {isLoading ? (
+        <LoadingContainer>
+          <ProductGrid container>
+            {renderSkeletonCards()}
+          </ProductGrid>
+        </LoadingContainer>
+      ) : items.length > 0 ? (
+        <ProductGrid container>
+          {items.map((item) => {
+            // Add free shipping status based on price and random rating data if not available
+            const productWithShipping = {
+              ...item,
+              freeShipping: item.price >= 5000,
+              rating: {
+                value: item.rating?.value || (Math.floor(Math.random() * 5) + 1),
+                count: item.rating?.count || Math.floor(Math.random() * 500) + 1
+              }
+            };
+
+            return (
+              <ProductGridItem item xs={6} sm={6} md={4} lg={3} key={item.id}>
+                <ProductCard 
+                  product={productWithShipping} 
+                  onAddToCart={handleAddToCart}
+                />
+              </ProductGridItem>
+            );
+          })}
+        </ProductGrid>
+      ) : (
+        <NoProductsMessage>
+          <Typography variant="h6" component="h2">
+            No se encontraron productos
+          </Typography>
+          <Typography variant="body2" color="textSecondary">
+            Intenta con otra categoría o busca algo diferente
+          </Typography>
+        </NoProductsMessage>
+      )}
+    </Container>
   );
 };
 

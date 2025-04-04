@@ -67,102 +67,108 @@ interface ProductBodyProps {
   product: Product;
 }
 
+// Colores constantes para cuando el tema no está disponible
+const DEFAULT_COLORS = {
+  PRIMARY: '#3483fa',
+  PRIMARY_DARK: '#0056c7',
+  SECONDARY: '#ff7733',
+  SUCCESS: '#00a650',
+  TEXT_PRIMARY: '#333333',
+  TEXT_SECONDARY: '#666666',
+  WHITE: '#FFFFFF',
+  BLACK: '#000000',
+  BACKGROUND: '#f5f5f5',
+  BACKGROUND_WHITE: '#FFFFFF',
+  RATING_STAR: '#ffc107'
+};
 
-
-const SwipeIndicator = styled(IconButton)(
-  ({ theme }) => `
-    @media (max-width: ${theme.breakpoints.values.sm}px) {
-        display: none;
+const SwipeIndicator = styled(IconButton)(({ theme }) => {
+  return {
+    '@media (max-width: 600px)': {
+      display: 'none'
+    },
+    transition: theme?.transitions?.create ? theme.transitions.create(['background', 'color']) : '300ms ease-in-out',
+    color: theme?.palette?.primary?.main || DEFAULT_COLORS.PRIMARY,
+    background: DEFAULT_COLORS.WHITE,
+    position: 'absolute',
+    width: theme?.spacing ? theme.spacing(5) : '40px',
+    height: theme?.spacing ? theme.spacing(5) : '40px',
+    top: '50%',
+    marginTop: theme?.spacing ? theme.spacing(-1.5) : '-12px',
+    borderRadius: '100px',
+    zIndex: 5,
+    '&:hover': {
+      background: DEFAULT_COLORS.WHITE,
+      color: DEFAULT_COLORS.BLACK,
+    },
+    '&.MuiSwipe-left': {
+      left: theme?.spacing ? theme.spacing(0.5) : '4px',
+    },
+    '&.MuiSwipe-right': {
+      right: theme?.spacing ? theme.spacing(0.5) : '4px',
     }
-    transition: ${theme.transitions.create(['background', 'color'])};
-    color: ${theme.colors.primary.main};
-    background: ${theme.colors.alpha.white[100]};
-    position: absolute;
-    width: ${theme.spacing(5)};
-    height: ${theme.spacing(5)};
-    top: 50%;
-    margin-top: ${theme.spacing(-1.5)};
-    border-radius: 100px;
-    z-index: 5;
+  };
+});
 
-    &:hover {
-      background: ${theme.colors.alpha.white[100]};
-      color: ${theme.colors.alpha.black[100]};
-    }
+const IndicatorsContainer = styled(Box)(({ theme }) => {
+  return {
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'space-between',
+    position: 'absolute',
+    width: '100%',
+    top: '50%',
+    transform: 'translateY(-50%)',
+    zIndex: 5,
+    marginTop: theme?.spacing ? theme.spacing(2) : '16px',
+    gap: theme?.spacing ? theme.spacing(1) : '8px'
+  };
+});
 
-    &.MuiSwipe-left {
-      left: ${theme.spacing(0.5)};
-    }
-    
-    &.MuiSwipe-right {
-      right: ${theme.spacing(0.5)};
-    }
-`
-);
-const IndicatorsContainer = styled(Box)(
-  ({ theme }) => `
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    position: absolute;
-    width: 100%;
-    top: 50%;
-    transform: translateY(-50%);
-    z-index: 5;
-  `
-);
-const SwiperWrapper = styled(Box)(
-  ({ theme }) => `
-  .swiper-wrapper {
-    .swiper-slide {
-      display: flex;
-      align-items: center;
-      justify-content: center;
-
-      img {
-        width: 100%;
-        height: auto;
-      }
-    }
-  }
-
-  .swiper-container-thumbs {
-    .swiper-wrapper {
-      display: flex;
-      align-items: center;
-    }
-
-    .swiper-slide {
-      width: 140px;
-      display: flex;
-      padding: 3px;
-
-      img {
-        width: 100%;
-        height: auto;
-  
-        opacity: .7;
-        transition: ${theme.transitions.create(['box-shadow', 'opacity'])};
-      }
-
-      &:hover {
-        cursor: pointer;
-
-        img {
-          opacity: 1;
+const SwiperWrapper = styled(Box)(({ theme }) => {
+  return {
+    '.swiper-wrapper': {
+      '.swiper-slide': {
+        display: 'flex',
+        alignItems: 'center',
+        justifyContent: 'center',
+        'img': {
+          width: '100%',
+          height: 'auto'
         }
       }
-
-      &.swiper-slide-thumb-active {
-        img {
-          opacity: 1;
-          box-shadow: 0 0 0 3px ${theme.colors.primary.main};
+    },
+    '.swiper-container-thumbs': {
+      '.swiper-wrapper': {
+        display: 'flex',
+        alignItems: 'center'
+      },
+      '.swiper-slide': {
+        width: '140px',
+        display: 'flex',
+        padding: '3px',
+        'img': {
+          width: '100%',
+          height: 'auto',
+          opacity: .7,
+          transition: theme?.transitions?.create ? theme.transitions.create(['box-shadow', 'opacity']) : '300ms ease-in-out'
+        },
+        '&:hover': {
+          cursor: 'pointer',
+          'img': {
+            opacity: 1
+          }
+        },
+        '&.swiper-slide-thumb-active': {
+          'img': {
+            opacity: 1,
+            boxShadow: `0 0 0 3px ${theme?.palette?.primary?.main || DEFAULT_COLORS.PRIMARY}`
+          }
         }
       }
     }
-  }
-`
-);
+  };
+});
 export const ItemDetail2: FC<ProductBodyProps> = ({ product }) => {
   const theme = useTheme();
   const { t }: { t: any } = useTranslation();

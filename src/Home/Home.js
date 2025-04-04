@@ -26,6 +26,7 @@ import { Link } from 'react-router-dom';
 import utiles from '../../src/components/assets/category/cuadernos.png';
 import novedad from '../../src/components/assets/category/etiqueta.png';
 import regalos from '../../src/components/assets/category/regalos.png';
+import { useNotification } from '../context/NotificationContext';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -207,17 +208,25 @@ const useStyles = makeStyles((theme) => ({
       fontSize: '1.5rem',
     },
   },
+  errorPaper: {
+    padding: theme.spacing(4),
+    backgroundColor: 'white',
+    borderRadius: theme.spacing(2),
+    boxShadow: '0 2px 8px rgba(0,0,0,0.05)',
+  }
 }));
 
 const Home = () => {
   const [items, setItems] = useState([]);
   const [offers, setOffers] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
   const { Id } = useParams();
   const isFirstRender = useRef(true);
   const classes = useStyles();
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down('sm'));
+  const { showCartNotification } = useNotification();
 
   useEffect(() => {
     const itemCollection = collection(db, "productos");
@@ -263,70 +272,132 @@ const Home = () => {
 
   if (loading) {
     return (
-      <Box display="flex" justifyContent="center" alignItems="center" minHeight="100vh">
-        <Spinner />
-      </Box>
+      <div className={classes.root}>
+        <Container className={classes.container} style={{ 
+          display: 'flex', 
+          justifyContent: 'center', 
+          alignItems: 'center', 
+          minHeight: '60vh' 
+        }}>
+          <Spinner />
+        </Container>
+      </div>
     );
   }
-  console.log("veo productos",items);
+
+  if (error) {
+    return (
+      <div className={classes.root}>
+        <Container className={classes.container}>
+          <Paper className={classes.errorPaper}>
+            <Typography variant="h5" color="error" gutterBottom>
+              Error al cargar los productos
+            </Typography>
+            <Typography variant="body1">{error}</Typography>
+          </Paper>
+        </Container>
+      </div>
+    );
+  }
+
   return (
     <div className={classes.root}>
       <Container className={classes.container}>
-        {Id ? (
-          <Fade in timeout={1000}>
-            <div className={classes.productsContainer}>
-              <ItemList items={items} />
-            </div>
-          </Fade>
-        ) : (
-          <>
-            
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.5 }}
+        >
+          <Paper
+            className={classes.heroSection}
+            sx={{
+              background: `linear-gradient(rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.4)), url(${process.env.PUBLIC_URL}/hero-image.jpg) center/cover`,
+            }}
+          >
+            <Box className={classes.heroContent}>
+              <Typography
+                variant="h1"
+                className={classes.heroTitle}
+                component="h1"
+              >
+                Bienvenido a Nuestra Tienda
+              </Typography>
+              <Typography variant="h5" className={classes.heroSubtitle}>
+                Descubre los mejores productos con una experiencia renovada
+              </Typography>
+            </Box>
+          </Paper>
+        </motion.div>
 
-            <section className={classes.categoriesSection}>
-              <Grid container className={classes.categoryGrid}>
-                {categories.map((category, index) => (
-                  <motion.div
-                    key={category.name}
-                    initial={{ opacity: 0, y: 20 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    transition={{ delay: index * 0.1 }}
-                  >
-                    <Link to={category.path} style={{ textDecoration: 'none' }}>
-                      <Paper className={classes.categoryCard}>
-                        <IconButton className={classes.iconButton}>
-                          <img src={category.icon} alt={category.name} className={classes.iconImages} />
-                        </IconButton>
-                        <Typography variant="subtitle1" className={classes.iconLabel}>
-                          {category.name}
-                        </Typography>
-                      </Paper>
-                    </Link>
-                  </motion.div>
-                ))}
-              </Grid>
-            </section>
-
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.4 }}
+        {/* Categories Section */}
+        <Fade in={true} timeout={800}>
+          <Paper elevation={0} className={classes.categoriesSection}>
+            <Typography
+              variant="h4"
+              align="center"
+              gutterBottom
+              sx={{ pt: 2, fontWeight: 'bold', color: '#333' }}
             >
-              <section className={classes.offersContainer}>
-                <Typography variant="h3" className={classes.sectionTitle}>
-                  Ofertas Especiales
-                </Typography>
-                <ItemList items={offers} />
-              </section>
+              Categorías Populares
+            </Typography>
+            <Box className={classes.categoryGrid}>
+              {categories.map((category) => (
+                <Box key={category.name} component="div">
+                  <Link
+                    to={category.path}
+                    style={{ textDecoration: "none" }}
+                  >
+                    <Paper elevation={0} className={classes.categoryCard}>
+                      <IconButton className={classes.iconButton}>
+                        <img
+                          src={category.icon}
+                          alt={category.name}
+                          className={classes.iconImages}
+                        />
+                      </IconButton>
+                      <Typography
+                        variant="subtitle1"
+                        align="center"
+                        sx={{ mt: 1, fontWeight: 500 }}
+                      >
+                        {category.name}
+                      </Typography>
+                    </Paper>
+                  </Link>
+                </Box>
+              ))}
+            </Box>
+          </Paper>
+        </Fade>
 
-              <section className={classes.productsContainer}>
-                <Typography variant="h3" className={classes.sectionTitle}>
-                  Productos Destacados
-                </Typography>
-                <ItemList items={items} />
-              </section>
-            </motion.div>
-          </>
-        )}
+        {/* Product section title */}
+        <Box sx={{ mt: 4, mb: 2 }}>
+          <Typography 
+            variant="h4" 
+            component="h2" 
+            align="center"
+            sx={{ 
+              fontWeight: 'bold',
+              position: 'relative',
+              '&:after': {
+                content: '""',
+                position: 'absolute',
+                bottom: -8,
+                left: '50%',
+                transform: 'translateX(-50%)',
+                width: 60,
+                height: 4,
+                backgroundColor: theme.palette.primary.main,
+                borderRadius: 2
+              }
+            }}
+          >
+            {Id ? `Productos en ${Id}` : 'Todos los Productos'}
+          </Typography>
+        </Box>
+
+        {/* Improved product listing */}
+        <ItemList items={items} loading={loading} />
       </Container>
     </div>
   );

@@ -12,50 +12,43 @@ import { CheckoutPage } from "./components/CartCounter/CheckoutPage";
 import Login from "./components/Login/login";
 import Product from './mercadopago/marcado-pago'
 import "@fontsource/roboto";
-import { StyledEngineProvider } from "@mui/material/styles";
+import { ThemeProvider } from "@mui/material/styles";
+import { StyledEngineProvider, CssBaseline } from "@mui/material";
 import HomePage from "./components/carousel/Carousel1"
 import Search from "./components/Search/Search"
-
-import ThemeProvider from './components/ItemDetail/theme/ThemeProvider'
-
+import theme from './theme/theme';
+import { NotificationProvider } from './context/NotificationContext';
 
 function App() {
-
   return (
     <div>
       <CartContext2>
-      <HashRouter> 
-      <ThemeProvider>
-       
-            <NavBar></NavBar>{" "}
-       
-          <Routes>
-            <Route path="/" element={<HomePage />} />
-
-            <Route exact path="/categoria/:Id" element={<Home />} />
-
-            <Route exact path="/search/:name" element={<Search />} />
-            <Route
-              exact
-              path="/detalle/:id"
-              element={<ItemDetailContainer />}
-            />
-            
-
-            <Route path="/cart" element={ <Cart />}/>
-            <Route path="/login" element={   <Login />}/>
-            <Route path="/pay" element={   <Product />}/>
-            <Route path="/whatsapp" element={      <WhatsApp/>}/>
-            <Route path="/checkout-page" element={   <CheckoutPage />}/>
-          
-          </Routes>
-
-          <WhatsApp/>
-       
-       
-            <Footer />
-            </ThemeProvider>
-            </HashRouter>
+        <StyledEngineProvider injectFirst>
+          <ThemeProvider theme={theme}>
+            <CssBaseline />
+            <NotificationProvider>
+              <HashRouter>
+                <NavBar />
+                <Routes>
+                  <Route path="/" element={<HomePage />} />
+                  <Route exact path="/categoria/:Id" element={<Home />} />
+                  <Route exact path="/search/:name" element={<Search />} />
+                  <Route
+                    exact
+                    path="/detalle/:id"
+                    element={<ItemDetailContainer />}
+                  />
+                  <Route path="/cart" element={<Cart />} />
+                  <Route path="/login" element={<Login />} />
+                  <Route path="/pay" element={<Product />} />
+                  <Route path="/whatsapp" element={<WhatsApp />} />
+                  <Route path="/checkout-page" element={<CheckoutPage />} />
+                </Routes>
+                <Footer />
+              </HashRouter>
+            </NotificationProvider>
+          </ThemeProvider>
+        </StyledEngineProvider>
       </CartContext2>
     </div>
   );

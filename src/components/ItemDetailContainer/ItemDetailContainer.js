@@ -7,6 +7,17 @@ import { doc, getFirestore, getDoc } from "firebase/firestore";
 import axios from 'axios';
 import { APIs } from '../../constants/constants'
 import { ItemDetail2 } from '../ItemDetail/ItemDetail2';
+import { Box, styled } from '@mui/material';
+
+// Contenedor para centrar el spinner
+const LoadingContainer = styled(Box)({
+  display: 'flex',
+  justifyContent: 'center',
+  alignItems: 'center',
+  width: '100%',
+  minHeight: '60vh',
+});
+
 const ItemDetailContainer = () => {
     const [product, setProduct] = useState({})
     const [loading, setLoading] = useState(true);
@@ -38,13 +49,15 @@ const ItemDetailContainer = () => {
     console.log("productos item detail conteiner", { ...product });
 
     return (
-
         <div>
-
-            {loading ? (<div className="cargando"><Spinner /></div>) : <ItemDetail2 product={product}></ItemDetail2>}
+            {loading ? (
+                <LoadingContainer>
+                    <Spinner />
+                </LoadingContainer>
+            ) : (
+                <ItemDetail2 product={product}></ItemDetail2>
+            )}
         </div>
-
     )
 }
 export default ItemDetailContainer
-

@@ -72,14 +72,14 @@ const useStyles = makeStyles((theme) => ({
     fontWeight: 700,
     marginBottom: theme.spacing(2),
     [theme.breakpoints.down('sm')]: {
-      fontSize: '1.8rem',
+      fontSize: '1.4rem',
     },
   },
   heroSubtitle: {
     fontSize: '1.2rem',
     opacity: 0.9,
     [theme.breakpoints.down('sm')]: {
-      fontSize: '1rem',
+      fontSize: '0.9rem',
     },
   },
   categoriesSection: {
@@ -139,8 +139,8 @@ const useStyles = makeStyles((theme) => ({
       transform: 'translateY(-2px)',
     },
     [theme.breakpoints.down('sm')]: {
-      width: '70px',
-      height: '70px',
+      width: '60px',
+      height: '60px',
     },
   },
   iconImages: {
@@ -163,7 +163,7 @@ const useStyles = makeStyles((theme) => ({
     textOverflow: 'ellipsis',
     whiteSpace: 'nowrap',
     [theme.breakpoints.down('sm')]: {
-      fontSize: '0.7rem',
+      fontSize: '0.4rem',
       marginTop: theme.spacing(0.5),
     },
   },
@@ -316,13 +316,18 @@ const Home = () => {
           >
             <Box className={classes.heroContent}>
               <Typography
-                variant="h1"
+                variant={isMobile ? "h4" : "h1"}
                 className={classes.heroTitle}
                 component="h1"
+                sx={{ fontSize: isMobile ? '1.2rem' : '2.5rem' }}
               >
                 Bienvenido a Nuestra Tienda
               </Typography>
-              <Typography variant="h5" className={classes.heroSubtitle}>
+              <Typography
+                variant="h6"
+                className={classes.heroSubtitle}
+                sx={{ fontSize: isMobile ? '1rem' : '1.2rem' }}
+              >
                 Descubre los mejores productos con una experiencia renovada
               </Typography>
             </Box>
@@ -333,7 +338,7 @@ const Home = () => {
         <Fade in={true} timeout={800}>
           <Paper elevation={0} className={classes.categoriesSection}>
             <Typography
-              variant="h4"
+              variant={isMobile ? "h6" : "h4"}
               align="center"
               gutterBottom
               sx={{ pt: 2, fontWeight: 'bold', color: '#333' }}
@@ -356,9 +361,9 @@ const Home = () => {
                         />
                       </IconButton>
                       <Typography
-                        variant="subtitle1"
+                        variant="subtitle2"
                         align="center"
-                        sx={{ mt: 1, fontWeight: 500 }}
+                        sx={{ mt: 1, fontWeight: 500, fontSize: '0.8rem' }}
                       >
                         {category.name}
                       </Typography>
@@ -373,7 +378,7 @@ const Home = () => {
         {/* Product section title */}
         <Box sx={{ mt: 4, mb: 2 }}>
           <Typography 
-            variant="h4" 
+            variant={isMobile ? "h6" : "h4"} 
             component="h2" 
             align="center"
             sx={{ 

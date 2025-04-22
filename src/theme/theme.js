@@ -78,7 +78,7 @@ const theme = createTheme({
     },
     subtitle1: {
       fontSize: '16px',
-      fontWeight: 400,
+           fontWeight: 400,
       lineHeight: 1.5,
       color: '#666666',
     },
@@ -88,6 +88,13 @@ const theme = createTheme({
       lineHeight: 1.57,
       color: '#666666',
     },
+    subtitle3: {
+      fontSize: '11px',
+      fontWeight: 400,
+      lineHeight: 1.57,
+      color: '#666666',
+    },
+
     body1: {
       fontSize: '16px',
       fontWeight: 400,

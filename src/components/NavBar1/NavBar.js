@@ -205,12 +205,12 @@ const NavBar = () => {
                     onClick={handleOpenNavMenu}
                     sx={{
                       color: anchorElNav ? 'white' : 'white', // Cambia el color cuando el menú está abierto
+                      '&.MuiIconButton-sizeSmall': {
+                        fontSize: '0.7em',
+                      },
                     }}
-                  
-
-
                   >
-                    <MenuIcon style={{color:'white'}}/>
+                    <MenuIcon style={{color:'white', fontSize: '1.2em'}}/>
 
                   </IconButton>
                   <Menu
@@ -266,13 +266,13 @@ const NavBar = () => {
                       alignItems: 'center',
                       justifyContent: 'space-between',
                     }}>
-                      <Typography variant="h6" sx={{ fontWeight: 'bold', color: 'white' }}>
+                      <Typography variant="h6" sx={{ fontWeight: 'bold', color: 'white', fontSize: '1.2em' }}>
                         Categorías
                       </Typography>
                       <IconButton 
                         size="medium" 
                         onClick={handleCloseNavMenu}
-                        sx={{ color: 'white' }}
+                        sx={{ color: 'white', fontSize: '1.2em' }}
                       >
                         <MenuIcon />
                       </IconButton>
@@ -302,7 +302,7 @@ const NavBar = () => {
                           >
                             <Typography sx={{ 
                               color: 'white', 
-                              fontSize: '18px', 
+                              fontSize: '1.2em', 
                               width: '100%',
                               textAlign: 'center',
                               fontWeight: 500

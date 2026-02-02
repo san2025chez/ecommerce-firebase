@@ -107,7 +107,18 @@ const NavBar = () => {
 
   return (
 
-    <AppBar position="static" style={{ backgroundColor: "#000000", left: isMobile ? '0px' : '', paddingLeft: isMobile ? '0px' : '' }}>
+    <AppBar
+      position="static"
+      className="navbar"
+      style={{
+        background: 'linear-gradient(180deg, #fdfbf7 0%, #f7f2ea 100%)',
+        color: '#1f2937',
+        boxShadow: '0 10px 24px rgba(15, 23, 42, 0.08)',
+        borderBottom: '1px solid rgba(31, 41, 55, 0.08)',
+        left: isMobile ? '0px' : '',
+        paddingLeft: isMobile ? '0px' : ''
+      }}
+    >
       <Container maxWidth="xl">
         <Toolbar disableGutters>
           {!isMobile && (
@@ -171,19 +182,21 @@ const NavBar = () => {
                     onChange={(e) => setSearchValue(e.target.value)}
                     onKeyPress={handleKeyPress}
                     style={{
-                      backgroundColor: 'white',
-                      borderRadius: '4px',
+                      backgroundColor: 'rgba(255,255,255,0.95)',
+                      borderRadius: '999px',
                       minWidth: '150px',
                       maxWidth: '250px',
-                      padding: '4px 8px 4px 32px',
-                      color: 'black',
+                      padding: '6px 12px 6px 36px',
+                      color: '#1f2937',
+                      border: '1px solid rgba(31, 41, 55, 0.10)',
+                      boxShadow: '0 8px 18px rgba(31, 41, 55, 0.08)',
                     }}
                   />
                   <SearchIcon
                     style={{
-                      color: 'gray',
+                      color: '#6b7280',
                       position: 'absolute',
-                      left: '8px',
+                      left: '12px',
                       top: '50%',
                       transform: 'translateY(-50%)',
                       cursor: 'pointer',
@@ -204,13 +217,13 @@ const NavBar = () => {
                     aria-haspopup="true"
                     onClick={handleOpenNavMenu}
                     sx={{
-                      color: anchorElNav ? 'white' : 'white', // Cambia el color cuando el menú está abierto
+                      color: '#1f2937',
                       '&.MuiIconButton-sizeSmall': {
                         fontSize: '0.7em',
                       },
                     }}
                   >
-                    <MenuIcon style={{color:'white', fontSize: '1.2em'}}/>
+                    <MenuIcon style={{color:'#1f2937', fontSize: '1.2em'}}/>
 
                   </IconButton>
                   <Menu
@@ -239,7 +252,7 @@ const NavBar = () => {
                     }}
                     PaperProps={{
                       style: {
-                        backgroundColor: 'black',
+                        backgroundColor: '#fdfbf7',
                         padding: '0',
                         display: 'flex',
                         flexDirection: 'column',
@@ -261,18 +274,18 @@ const NavBar = () => {
                   >
                     <Box sx={{ 
                       padding: '16px', 
-                      borderBottom: '1px solid #333',
+                      borderBottom: '1px solid rgba(31, 41, 55, 0.08)',
                       display: 'flex',
                       alignItems: 'center',
                       justifyContent: 'space-between',
                     }}>
-                      <Typography variant="h6" sx={{ fontWeight: 'bold', color: 'white', fontSize: '1.2em' }}>
+                      <Typography variant="h6" sx={{ fontWeight: 800, color: '#1f2937', fontSize: '1.2em' }}>
                         Categorías
                       </Typography>
                       <IconButton 
                         size="medium" 
                         onClick={handleCloseNavMenu}
-                        sx={{ color: 'white', fontSize: '1.2em' }}
+                        sx={{ color: '#1f2937', fontSize: '1.2em' }}
                       >
                         <MenuIcon />
                       </IconButton>
@@ -294,18 +307,18 @@ const NavBar = () => {
                             onClick={handleCloseNavMenu}
                             sx={{
                               padding: '16px',
-                              borderBottom: '1px solid #333',
+                              borderBottom: '1px solid rgba(31, 41, 55, 0.08)',
                               '&:hover': {
-                                backgroundColor: '#333'
+                                backgroundColor: 'rgba(37, 99, 235, 0.08)'
                               }
                             }}
                           >
                             <Typography sx={{ 
-                              color: 'white', 
+                              color: '#1f2937', 
                               fontSize: '1.2em', 
                               width: '100%',
                               textAlign: 'center',
-                              fontWeight: 500
+                              fontWeight: 600
                             }}>
                               {item.name}
                             </Typography>
@@ -332,7 +345,17 @@ const NavBar = () => {
                 <Button
                   key={item.id}
                   onClick={handleCloseNavMenu}
-                  sx={{ my: 2, color: 'blue', display: 'block', fontSize: '0.8em' }} // Cambio para reducir el tamaño de la letra en dispositivos de escritorio
+                  sx={{ 
+                    my: 1.5,
+                    color: '#1f2937',
+                    display: 'block',
+                    fontSize: '0.85em',
+                    fontWeight: 600,
+                    '&:hover': {
+                      color: '#2563eb',
+                      backgroundColor: 'rgba(37, 99, 235, 0.08)'
+                    }
+                  }}
                 >
                   <Link to={`/categoria/${item.name}`}>  {index !== 0 && <span style={{ marginRight: '10px' }} />} {item.name} </Link>
                 </Button>
@@ -355,17 +378,19 @@ const NavBar = () => {
                 onChange={(e) => setSearchValue(e.target.value)}
                 onKeyPress={handleKeyPress}
                 style={{
-                  backgroundColor: 'white',
-                  borderRadius: '4px',
-                  padding: '4px 8px 4px 32px',
-                  color: 'black',
+                  backgroundColor: 'rgba(255,255,255,0.95)',
+                  borderRadius: '999px',
+                  padding: '6px 12px 6px 36px',
+                  color: '#1f2937',
+                  border: '1px solid rgba(31, 41, 55, 0.10)',
+                  boxShadow: '0 8px 18px rgba(31, 41, 55, 0.08)',
                 }}
               />
               <SearchIcon
                 style={{
-                  color: 'gray',
+                  color: '#6b7280',
                   position: 'absolute',
-                  left: '8px',
+                  left: '12px',
                   top: '50%',
                   transform: 'translateY(-50%)',
                   cursor: 'pointer',

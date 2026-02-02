@@ -1,15 +1,15 @@
 import { useEffect, useState ,React} from "react";
 import { ItemList } from "../ItemList/ItemList";
-import 'firebase/firestore'
 import Spinner from "../Spinner/Spinner";
 import "./Home.scss";
 import {useParams} from 'react-router-dom'
 import { makeStyles } from '@material-ui/core/styles';
-import { collection, getDocs, getFirestore, query, where,doc } from "firebase/firestore";
 import { useNavigate } from 'react-router-dom'
 import axios from 'axios'
 import { APIs } from "../../constants/constants";
 import Item from '../../components/carousel/Item'
+import { client } from "../../supabase/client";
+import { mapSupabaseProduct } from "../../supabase/mappers";
 /* import Item from '../components/carousel/Item'; */
 
 const useStyles = makeStyles((theme) => ({
@@ -38,33 +38,19 @@ console.log("buscador",name);
 useEffect(() => {
   const fetchProduct = async () => {
     try {
-      const db = getFirestore();
-      // La siguiente linea utiliza el metodo "collection" de Firebase para obtener una coleccion de productos
-      // y luego utiliza el metodo "where" para filtrar los productos que tengan el nombre que coincide con el parametro "name"
-      // pasado por la URL. La busqueda es case-insensitive (no distingue mayusculas de minusculas) gracias al metodo "toLowerCase()"
-      // que se aplica al parametro "name". De esta forma, si el usuario busca por "MANZANAS" o "manzanas", el resultado sera el mismo.
-      const q = query(collection(db, "productos"), where("productName", "in", [
-        name.charAt(0).toUpperCase() + name.slice(1).toLowerCase(),
-        name.toLowerCase(),
-        name.toUpperCase(),
-        name
-      ]));
+      // Busqueda en Supabase usando ilike para case-insensitive
+      // Busca coincidencias en el campo "nombre" de la tabla utiles
+      const { data, error } = await client
+        .from('utiles')
+        .select('*')
+        .ilike('nombre', `%${name}%`);
 
-      const querySnapshot = await getDocs(q);
+      if (error) throw error;
 
-      if (!querySnapshot.empty) {
-        const productData = querySnapshot.docs.map((doc) => ({
-          id: doc.id,
-          ...doc.data()
-        }));
-
-        if (productData.length > 0) {
-          setProduct(productData[0]);
-        } else {
-          console.log('No product found');
-        }
+      if (data && data.length > 0) {
+        setProduct(mapSupabaseProduct(data[0]));
       } else {
-        console.log('Query returned empty snapshot');
+        console.log('No product found');
       }
 
       setLoading(false);

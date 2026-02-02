@@ -3,11 +3,12 @@ import { useEffect, useState } from 'react'
 import { useParams } from 'react-router-dom'
 import Spinner from '../../components/Spinner/Spinner'
 import './ItemDetailContainer.scss'
-import { doc, getFirestore, getDoc } from "firebase/firestore";
 import axios from 'axios';
 import { APIs } from '../../constants/constants'
 import { ItemDetail2 } from '../ItemDetail/ItemDetail2';
 import { Box, styled } from '@mui/material';
+import { client } from '../../supabase/client';
+import { mapSupabaseProduct } from '../../supabase/mappers';
 
 // Contenedor para centrar el spinner
 const LoadingContainer = styled(Box)({
@@ -25,26 +26,25 @@ const ItemDetailContainer = () => {
     const { id } = useParams();
 
     useEffect(() => {
-        const db = getFirestore();
-
-        const docRef = doc(db, "productos", id);
-
-        const rawResponse = async () => {
+        const fetchProduct = async () => {
             try {
-                getDoc(docRef).then((snapshot) => {
-                    setProduct(({
-                        id: snapshot.id,
-                        ...snapshot.data()
-                    }))
-                    setLoading(false)
-                })
+                const { data, error } = await client
+                    .from('utiles')
+                    .select('*')
+                    .eq('id', id)
+                    .single();
 
+                if (error) throw error;
+
+                setProduct(mapSupabaseProduct(data));
+                setLoading(false);
             } catch (error) {
                 console.error("Error al obtener los datos", error);
+                setLoading(false);
             }
-        }
+        };
         
-        rawResponse();
+        fetchProduct();
     }, [id])
     console.log("productos item detail conteiner", { ...product });
 

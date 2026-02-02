@@ -1,9 +1,9 @@
-a {
-  color: #e2e6eef5 !important;
+.navbar a {
+  color: #1f2937 !important;
   text-decoration: none !important;
 }
-.mobile-menu-item {
-  color: white !important;
+.navbar .mobile-menu-item {
+  color: #1f2937 !important;
 }
 
 div.MuiPaper-root:nth-child(3){
@@ -23,6 +23,7 @@ div.MuiPaper-root:nth-child(3){
   max-width: 100% !important;
   max-height: 100% !important;
   border-radius: 0 !important;
+  background: #fdfbf7 !important;
   
   /* Asegurar que los items del menú se muestren en columna */
   .MuiList-root {
@@ -36,14 +37,14 @@ div.MuiPaper-root:nth-child(3){
   /* Dar estilo a cada item */
   .MuiMenuItem-root {
     padding: 16px !important;
-    border-bottom: 1px solid #333 !important;
+    border-bottom: 1px solid rgba(31, 41, 55, 0.08) !important;
     
     &:hover {
-      background-color: #333 !important;
+      background-color: rgba(37, 99, 235, 0.08) !important;
     }
     
     a, .MuiTypography-root {
-      color: white !important;
+      color: #1f2937 !important;
       width: 100% !important;
       display: block !important;
       text-align: center !important;
@@ -58,7 +59,7 @@ div.MuiPaper-root:nth-child(3){
   height: 100% !important;
   
   .MuiBackdrop-root {
-    background-color: rgba(0, 0, 0, 0.8) !important;
+    background-color: rgba(31, 41, 55, 0.45) !important;
   }
 }
 

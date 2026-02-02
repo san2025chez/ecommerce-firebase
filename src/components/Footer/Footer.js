@@ -72,10 +72,11 @@ export default function Footer() {
 
   return (
     <Box 
-      component="footer" 
+      component="footer"
+      className="footer"
       sx={{
-        backgroundColor: 'black',
-        color: 'white',
+        backgroundColor: '#0b1b2b',
+        color: '#ffffff',
         py: isMobile ? 4 : 6,
         mt: 'auto',
         position: 'relative',
@@ -86,7 +87,7 @@ export default function Footer() {
           left: 0,
           right: 0,
           height: '1px',
-          background: 'linear-gradient(90deg, transparent, #1976d2, transparent)',
+          background: 'linear-gradient(90deg, transparent, rgba(96, 165, 250, 0.6), transparent)',
         }
       }}
     >
@@ -98,15 +99,15 @@ export default function Footer() {
               Contacto
             </Typography>
             <Box sx={contentBoxStyles}>
-              <NavLink to={ubicacion} className="footer-link" style={{ display: 'flex', alignItems: 'center', gap: 1, color: 'white', textDecoration: 'none' }}>
+              <NavLink to={ubicacion} className="footer-link" style={{ display: 'flex', alignItems: 'center', gap: 1, color: '#ffffff', textDecoration: 'none' }}>
                 <LocationOnIcon fontSize="small" />
                 <Typography>Perico, Jujuy</Typography>
               </NavLink>
-              <NavLink to="mailto:contacto@ejemplo.com" className="footer-link" style={{ display: 'flex', alignItems: 'center', gap: 1, color: 'white', textDecoration: 'none' }}>
+              <NavLink to="mailto:contacto@ejemplo.com" className="footer-link" style={{ display: 'flex', alignItems: 'center', gap: 1, color: '#ffffff', textDecoration: 'none' }}>
                 <MailIcon fontSize="small" />
                 <Typography>contacto@ejemplo.com</Typography>
               </NavLink>
-              <NavLink to={whatssaplink} className="footer-link" style={{ display: 'flex', alignItems: 'center', gap: 1, color: 'white', textDecoration: 'none' }}>
+              <NavLink to={whatssaplink} className="footer-link" style={{ display: 'flex', alignItems: 'center', gap: 1, color: '#ffffff', textDecoration: 'none' }}>
                 <WhatsAppIcon fontSize="small" />
                 <Typography>WhatsApp</Typography>
               </NavLink>
@@ -125,7 +126,7 @@ export default function Footer() {
                   to={`/categoria/${page.name}`} 
                   className="footer-link"
                   style={{ 
-                    color: 'white', 
+                    color: '#ffffff', 
                     textDecoration: 'none',
                     transition: 'color 0.3s ease'
                   }}
@@ -154,7 +155,7 @@ export default function Footer() {
                   target="_blank"
                   rel="noopener noreferrer"
                   sx={{
-                    color: 'white',
+                    color: '#cbd5f5',
                     '&:hover': {
                       color: social.color,
                       transform: 'scale(1.1) rotate(8deg)',
@@ -180,13 +181,13 @@ export default function Footer() {
           variant="body2" 
           align="center"
           sx={{ 
-            color: 'rgba(255, 255, 255, 0.7)',
+            color: 'rgba(203, 213, 245, 0.9)',
             fontSize: '0.875rem'
           }}
         >
           Creado por
           &nbsp;
-          <NavLink to="https://adasoft.com.ar" className="nav-link blink-link" style={{ color: '#1976d2' }}><u>ADASOFT</u></NavLink>
+          <NavLink to="https://adasoft.com.ar" className="nav-link blink-link" style={{ color: '#60a5fa' }}><u>ADASOFT</u></NavLink>
           &nbsp;
           {currentYear} 
         </Typography>

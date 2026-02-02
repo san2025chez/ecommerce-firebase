@@ -85,7 +85,7 @@ export const ItemList = ({ items = [], loading = false }) => {
           </ProductGrid>
         </LoadingContainer>
       ) : items.length > 0 ? (
-        <ProductGrid container>
+        <ProductGrid container alignItems="stretch">
           {items.map((item) => {
             // Add free shipping status based on price and random rating data if not available
             const productWithShipping = {

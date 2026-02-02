@@ -154,11 +154,14 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 function Carousel1() {
+  console.log("🎠 Carousel1 montado");
   const classes = useStyles();
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down('sm'));
   const [activeStep, setActiveStep] = useState(0);
   const [progress, setProgress] = useState(0);
+  
+  console.log("🎠 Carousel1 - Estado inicial:", { activeStep, progress });
 
   const handleNext = () => {
     setActiveStep((prevStep) => (prevStep + 1) % slides.length);
@@ -289,10 +292,12 @@ function Carousel1() {
 }
 
 function HomePage() {
+  console.log("🏠 HomePage montado - Renderizando Carousel y Home");
+  
   return (
     <>
       <Carousel1 />
-     {/*  <Box sx={{ my: 4 }} /> */}
+      <Box sx={{ height: { xs: 16, sm: 24, md: 32 } }} />
       <Home />
     </>
   );

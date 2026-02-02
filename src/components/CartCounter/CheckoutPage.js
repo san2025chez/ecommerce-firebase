@@ -4,9 +4,9 @@ import {makeStyles} from "@material-ui/core/styles"
 import { Typography } from "@material-ui/core";
 import Grid from "@material-ui/core/Grid";
 import CheckoutCard from './CheckoutCard';
-import { db} from '../../firebase/firebase';
 import Total from './Total'
-import {collection} from "firebase/firestore";
+import { client } from '../../supabase/client';
+import { mapSupabaseProducts } from '../../supabase/mappers';
 
 
 const useStyles = makeStyles((theme) =>({
@@ -20,20 +20,26 @@ export const CheckoutPage=()=>{
    const [items, setItems] = useState([])
    
       useEffect(() => {
-  
-          
-          const itemsCollection = collection(db,'productos')
-          const prom = itemsCollection.get()
-          prom.then((resultado) =>{
-            console.log("se consultaron los datos");
-            console.log(resultado);
-            if(resultado.size>0){
-              console.log("comprobando",resultado.docs);
-              setItems(resultado.docs.map(doc=>doc.data()))
+          const fetchProducts = async () => {
+            try {
+              const { data, error } = await client
+                .from('utiles')
+                .select('*');
+              
+              if (error) throw error;
+              
+              console.log("se consultaron los datos");
+              console.log(data);
+              if(data && data.length > 0){
+                console.log("comprobando", data);
+                setItems(mapSupabaseProducts(data));
+              }
+            } catch (error) {
+              console.error("Error fetching products:", error);
             }
-          }) 
-    
-        
+          };
+          
+          fetchProducts();
         },[]);
 
 

@@ -1,12 +1,11 @@
 import React, { useEffect, useState, useRef } from "react";
 import { ItemList } from "../components/ItemList/ItemList.js";
-import 'firebase/firestore';
 import Spinner from "../components/Spinner/Spinner";
 import "./Home.scss";
 import { useParams } from 'react-router-dom';
 import { makeStyles } from '@material-ui/core/styles';
-import { collection, getDocs, query, where } from "firebase/firestore";
-import { db } from '../firebase/firebase.js';
+import { client } from '../supabase/client';
+import { mapSupabaseProducts } from '../supabase/mappers';
 import { 
   IconButton, 
   Typography, 
@@ -31,17 +30,17 @@ import { useNotification } from '../context/NotificationContext';
 const useStyles = makeStyles((theme) => ({
   root: {
     minHeight: '100vh',
-    backgroundColor: '#f5f5f7',
-    paddingTop: theme.spacing(4),
+    background: 'radial-gradient(1200px 600px at 20% -10%, rgba(59,130,246,0.15), transparent 60%), radial-gradient(900px 500px at 100% 0%, rgba(99,102,241,0.12), transparent 55%), #f7f8fb',
+    paddingTop: theme.spacing(3),
     paddingBottom: theme.spacing(8),
     [theme.breakpoints.down('sm')]: {
-      paddingTop: 0,
+      paddingTop: theme.spacing(1),
       paddingBottom: theme.spacing(4),
     },
   },
   container: {
     width: '100%',
-    maxWidth: '1400px',
+    maxWidth: '1320px',
     margin: '0 auto',
     [theme.breakpoints.down('sm')]: {
       padding: theme.spacing(2),
@@ -51,14 +50,16 @@ const useStyles = makeStyles((theme) => ({
     position: 'relative',
     height: '300px',
     marginBottom: theme.spacing(6),
-    borderRadius: theme.shape.borderRadius,
+    borderRadius: theme.spacing(3),
     overflow: 'hidden',
-    backgroundColor: theme.palette.primary.main,
-    color: 'white',
+    background: 'linear-gradient(135deg, #f8fafc 0%, #eef2ff 55%, #e0f2fe 100%)',
+    color: '#0f172a',
     display: 'flex',
     alignItems: 'center',
     justifyContent: 'center',
     textAlign: 'center',
+    border: '1px solid rgba(15, 23, 42, 0.08)',
+    boxShadow: '0 18px 40px rgba(15, 23, 42, 0.12)',
     [theme.breakpoints.down('sm')]: {
       height: '200px',
     },
@@ -66,28 +67,32 @@ const useStyles = makeStyles((theme) => ({
   heroContent: {
     zIndex: 1,
     padding: theme.spacing(3),
+    maxWidth: 720,
   },
   heroTitle: {
     fontSize: '2.5rem',
-    fontWeight: 700,
+    fontWeight: 800,
     marginBottom: theme.spacing(2),
+    letterSpacing: '-0.5px',
     [theme.breakpoints.down('sm')]: {
       fontSize: '1.4rem',
     },
   },
   heroSubtitle: {
     fontSize: '1.2rem',
-    opacity: 0.9,
+    opacity: 0.75,
     [theme.breakpoints.down('sm')]: {
       fontSize: '0.9rem',
     },
   },
   categoriesSection: {
-    padding: theme.spacing(2, 0),
-    backgroundColor: '#ffffff',
-    borderRadius: theme.spacing(2),
+    padding: theme.spacing(2.5, 0),
+    backgroundColor: 'rgba(255,255,255,0.75)',
+    borderRadius: theme.spacing(2.5),
     marginBottom: theme.spacing(3),
-    boxShadow: '0 2px 8px rgba(0,0,0,0.05)',
+    boxShadow: '0 10px 30px rgba(15, 23, 42, 0.08)',
+    backdropFilter: 'blur(10px)',
+    border: '1px solid rgba(15, 23, 42, 0.06)',
     [theme.breakpoints.down('sm')]: {
       padding: theme.spacing(1, 0),
       marginBottom: theme.spacing(2),
@@ -101,7 +106,7 @@ const useStyles = makeStyles((theme) => ({
     alignItems: 'start',
     padding: theme.spacing(2),
     margin: '0 auto',
-    maxWidth: '1200px',
+    maxWidth: '1100px',
     [theme.breakpoints.down('sm')]: {
       gridTemplateColumns: 'repeat(3, 1fr)',
       gap: theme.spacing(2),
@@ -114,12 +119,15 @@ const useStyles = makeStyles((theme) => ({
     flexDirection: 'column',
     alignItems: 'center',
     padding: theme.spacing(1),
-    backgroundColor: 'transparent',
-    border: 'none',
-    boxShadow: 'none',
-    transition: 'all 0.3s ease',
+    backgroundColor: 'rgba(255,255,255,0.6)',
+    border: '1px solid rgba(15, 23, 42, 0.08)',
+    borderRadius: theme.spacing(2),
+    boxShadow: '0 8px 20px rgba(15, 23, 42, 0.08)',
+    transition: 'transform 200ms ease, box-shadow 200ms ease, border-color 200ms ease',
     '&:hover': {
-      transform: 'translateY(-5px)',
+      transform: 'translateY(-6px)',
+      borderColor: 'rgba(59,130,246,0.4)',
+      boxShadow: '0 14px 28px rgba(15, 23, 42, 0.16)',
     },
   },
   iconButton: {
@@ -129,14 +137,14 @@ const useStyles = makeStyles((theme) => ({
     alignItems: 'center',
     justifyContent: 'center',
     borderRadius: '50%',
-    backgroundColor: '#ffffff',
-    boxShadow: '0 2px 8px rgba(0,0,0,0.1)',
-    transition: 'all 0.3s ease',
+    backgroundColor: 'rgba(255,255,255,0.9)',
+    boxShadow: '0 8px 20px rgba(15, 23, 42, 0.12)',
+    transition: 'transform 200ms ease, box-shadow 200ms ease',
     padding: 0,
     '&:hover': {
       backgroundColor: '#ffffff',
-      boxShadow: '0 4px 12px rgba(0,0,0,0.15)',
-      transform: 'translateY(-2px)',
+      boxShadow: '0 14px 28px rgba(15, 23, 42, 0.16)',
+      transform: 'translateY(-2px) scale(1.02)',
     },
     [theme.breakpoints.down('sm')]: {
       width: '60px',
@@ -168,22 +176,24 @@ const useStyles = makeStyles((theme) => ({
     },
   },
   offersContainer: {
-    backgroundColor: 'white',
-    borderRadius: '20px',
+    backgroundColor: 'rgba(255,255,255,0.9)',
+    borderRadius: '24px',
     paddingTop: theme.spacing(4),
     padding: theme.spacing(4),
     marginBottom: theme.spacing(6),
-    boxShadow: '0 4px 20px rgba(0,0,0,0.08)',
+    boxShadow: '0 16px 40px rgba(15, 23, 42, 0.12)',
+    border: '1px solid rgba(15, 23, 42, 0.06)',
     [theme.breakpoints.down('sm')]: {
       padding: 0,
-      borderRadius: '10px',
+      borderRadius: '12px',
     },
   },
   productsContainer: {
-    backgroundColor: 'white',
-    borderRadius: '20px',
+    backgroundColor: 'rgba(255,255,255,0.9)',
+    borderRadius: '24px',
     padding: theme.spacing(4),
-    boxShadow: '0 4px 20px rgba(0,0,0,0.08)',
+    boxShadow: '0 16px 40px rgba(15, 23, 42, 0.12)',
+    border: '1px solid rgba(15, 23, 42, 0.06)',
     [theme.breakpoints.down('sm')]: {
       padding: theme.spacing(1),
       borderRadius: '12px',
@@ -191,7 +201,7 @@ const useStyles = makeStyles((theme) => ({
   },
   sectionTitle: {
     fontSize: '1.7rem',
-    fontWeight: 600,
+    fontWeight: 700,
     marginBottom: theme.spacing(4),
     position: 'relative',
     '&:after': {
@@ -201,7 +211,7 @@ const useStyles = makeStyles((theme) => ({
       left: 0,
       width: '60px',
       height: '4px',
-      backgroundColor: theme.palette.primary.main,
+      background: 'linear-gradient(90deg, #3b82f6 0%, #6366f1 100%)',
       borderRadius: '2px',
     },
     [theme.breakpoints.down('sm')]: {
@@ -210,9 +220,9 @@ const useStyles = makeStyles((theme) => ({
   },
   errorPaper: {
     padding: theme.spacing(4),
-    backgroundColor: 'white',
-    borderRadius: theme.spacing(2),
-    boxShadow: '0 2px 8px rgba(0,0,0,0.05)',
+    backgroundColor: '#ffffff',
+    borderRadius: theme.spacing(2.5),
+    boxShadow: '0 10px 30px rgba(15, 23, 42, 0.12)',
   }
 }));
 
@@ -222,43 +232,104 @@ const Home = () => {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const { Id } = useParams();
-  const isFirstRender = useRef(true);
   const classes = useStyles();
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down('sm'));
-  const { showCartNotification } = useNotification();
+  
+  console.log("✅ Home mounted, loading:", loading);
 
   useEffect(() => {
-    const itemCollection = collection(db, "productos");
+    let isMounted = true;
+    
+    const fetchData = async () => {
+      try {
+        console.log("🔄 Iniciando carga de datos desde Supabase...");
+        setLoading(true);
+        setError(null);
 
-    const fetchOffers = async () => {
-      const offerQuery = query(itemCollection, where('enOferta', '==', true));
-      const offerSnapshot = await getDocs(offerQuery);
-      setOffers(offerSnapshot.docs.map((doc) => ({
-        ...doc.data(),
-        id: doc.id
-      })));
-    };
+        // Fetch todos los productos (sin .single() porque queremos múltiples registros)
+        const { data: allData, error: fetchError } = await client
+          .from('utiles')
+          .select('*');
+         
+        console.log("📦 DATOS CRUDOS de Supabase:", allData);
+        console.log("📊 Tipo de dato:", Array.isArray(allData) ? 'Array' : typeof allData);
+        console.log("🔢 Cantidad de registros:", allData?.length || 0);
 
-    const fetchProducts = async () => {
-      if (Id) {
-        const itemQuery = query(itemCollection, where('categoria', '==', Id));
-        const snapshot = await getDocs(itemQuery);
-        setItems(snapshot.docs.map((doc) => ({
-          ...doc.data(),
-          id: doc.id
-        })));
-      } else {
-        const productQuery = query(itemCollection, where('categoria', '==', 'Productos'));
-        const productsSnapshot = await getDocs(productQuery);
-        setItems(productsSnapshot.docs.map((doc) => ({
-          ...doc.data(),
-          id: doc.id
-        })));
+        if (fetchError) {
+          console.error("❌ Error de Supabase:", fetchError);
+          throw fetchError;
+        }
+
+        if (!isMounted) return;
+
+        // Si no hay datos
+        if (!allData || !Array.isArray(allData) || allData.length === 0) {
+          console.warn("⚠️ No hay datos en la tabla 'utiles'");
+          console.log("💡 Posibles causas:");
+          console.log("   1. La tabla está vacía");
+          console.log("   2. RLS (Row Level Security) está bloqueando el acceso");
+          console.log("   3. El nombre de la tabla es incorrecto");
+          setItems([]);
+          setOffers([]);
+          setLoading(false);
+          return;
+        }
+
+        // Mapear productos
+        console.log("🔄 Mapeando productos...");
+        const mappedProducts = mapSupabaseProducts(allData);
+        console.log("✅ Productos mapeados:", mappedProducts.length);
+        console.log("📋 Primer producto mapeado:", mappedProducts[0]);
+
+        // Filtrar por categoría si existe
+        let filteredItems = mappedProducts;
+        if (Id) {
+          console.log(`🔍 Filtrando por categoría: "${Id}"`);
+          filteredItems = mappedProducts.filter(item => item.categoria === Id);
+          console.log(`📦 Filtrado por categoría "${Id}":`, filteredItems.length, "productos");
+          if (filteredItems.length === 0) {
+            console.warn(`⚠️ No hay productos en la categoría "${Id}"`);
+            console.log("📋 Categorías disponibles:", [...new Set(mappedProducts.map(p => p.categoria))]);
+          }
+        } else {
+          console.log("📦 Mostrando todos los productos (sin filtro de categoría)");
+        }
+
+        // Filtrar ofertas (si existe el campo enOferta)
+        const offersData = mappedProducts.filter(item => item.enOferta === true);
+        console.log("🎉 Ofertas encontradas:", offersData.length);
+        if (offersData.length > 0) {
+          console.log("🎁 Primera oferta:", offersData[0]);
+        }
+
+        setItems(filteredItems);
+        setOffers(offersData);
+        
+        console.log("✅ Estado actualizado:");
+        console.log("   - Items a mostrar:", filteredItems.length);
+        console.log("   - Ofertas:", offersData.length);
+        
+      } catch (err) {
+        console.error('❌ Error fatal:', err);
+        if (isMounted) {
+          setError(err.message || 'Error al cargar productos');
+          setItems([]);
+          setOffers([]);
+        }
+      } finally {
+        if (isMounted) {
+          setLoading(false);
+          console.log("✅ Carga completada");
+        }
       }
     };
 
-    fetchOffers().then(() => fetchProducts()).finally(() => setLoading(false));
+    fetchData();
+
+    return () => {
+      isMounted = false;
+    };
   }, [Id]);
 
   const categories = [
@@ -311,7 +382,7 @@ const Home = () => {
           <Paper
             className={classes.heroSection}
             sx={{
-              background: `linear-gradient(rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.4)), url(${process.env.PUBLIC_URL}/hero-image.jpg) center/cover`,
+              background: `linear-gradient(135deg, rgba(248,250,252,0.95) 0%, rgba(238,242,255,0.9) 55%, rgba(224,242,254,0.9) 100%), url(${process.env.PUBLIC_URL}/hero-image.jpg) center/cover`,
             }}
           >
             <Box className={classes.heroContent}>
@@ -341,7 +412,7 @@ const Home = () => {
               variant={isMobile ? "h6" : "h4"}
               align="center"
               gutterBottom
-              sx={{ pt: 2, fontWeight: 'bold', color: '#333' }}
+              sx={{ pt: 2, fontWeight: 800, color: '#0f172a', letterSpacing: '-0.3px' }}
             >
               Categorías Populares
             </Typography>

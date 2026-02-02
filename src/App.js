@@ -18,8 +18,11 @@ import HomePage from "./components/carousel/Carousel1"
 import Search from "./components/Search/Search"
 import theme from './theme/theme';
 import { NotificationProvider } from './context/NotificationContext';
+import SupabaseTest from './components/SupabaseTest';
 
 function App() {
+  console.log("🚀 App iniciado");
+  
   return (
     <div>
       <CartContext2>
@@ -30,6 +33,7 @@ function App() {
               <HashRouter>
                 <NavBar />
                 <Routes>
+                  <Route path="/test-supabase" element={<SupabaseTest />} />
                   <Route path="/" element={<HomePage />} />
                   <Route exact path="/categoria/:Id" element={<Home />} />
                   <Route exact path="/search/:name" element={<Search />} />

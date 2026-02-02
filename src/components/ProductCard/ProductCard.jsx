@@ -31,30 +31,53 @@ const DEFAULT_COLORS = {
 };
 
 // Styled components
-const ProductCardWrapper = styled(Card)({
+const ProductCardWrapper = styled(Card)(({ theme }) => ({
   maxWidth: '100%',
   height: '100%',
   display: 'flex',
   flexDirection: 'column',
   backgroundColor: '#FFFFFF',
-  boxShadow: '0 1px 2px 0 rgba(0,0,0,.15)',
-  transition: 'all 300ms',
-  borderRadius: 8,
+  borderRadius: 16,
   overflow: 'hidden',
   position: 'relative',
+  border: '1px solid rgba(0, 0, 0, 0.06)',
+  boxShadow: '0 6px 20px rgba(10, 20, 30, 0.08)',
+  transition: 'transform 280ms ease, box-shadow 280ms ease, border-color 280ms ease',
+  '&:before': {
+    content: '""',
+    position: 'absolute',
+    inset: 0,
+    background: 'radial-gradient(1200px 600px at 100% -20%, rgba(52,131,250,0.12), transparent 50%)',
+    opacity: 0,
+    transition: 'opacity 280ms ease',
+    pointerEvents: 'none',
+  },
   '&:hover': {
-    boxShadow: '0 4px 12px 0 rgba(0,0,0,.2)',
+    transform: 'translateY(-6px)',
+    boxShadow: '0 12px 30px rgba(10, 20, 30, 0.16)',
+    borderColor: 'rgba(52,131,250,0.35)',
+    '&:before': {
+      opacity: 1,
+    },
     '& .MuiCardMedia-root': {
-      transform: 'scale(1.05)',
+      transform: 'scale(1.06)',
+    },
+    '& .product-actions': {
+      opacity: 1,
+      transform: 'translateY(0)',
     },
   },
-});
+  [theme.breakpoints.down('sm')]: {
+    borderRadius: 12,
+  },
+}));
 
 const ProductImageWrapper = styled('div')({
   position: 'relative',
   width: '100%',
   paddingTop: '100%', // 1:1 Aspect ratio
   overflow: 'hidden',
+  background: 'linear-gradient(180deg, #f7f9fc 0%, #ffffff 100%)',
 });
 
 const ProductImage = styled(CardMedia)({
@@ -64,8 +87,8 @@ const ProductImage = styled(CardMedia)({
   width: '100%',
   height: '100%',
   objectFit: 'contain',
-  padding: '16px',
-  transition: 'transform 300ms',
+  padding: '18px',
+  transition: 'transform 300ms ease',
 });
 
 const DiscountBadge = styled(Chip)({
@@ -75,21 +98,26 @@ const DiscountBadge = styled(Chip)({
   backgroundColor: DEFAULT_COLORS.SECONDARY,
   color: DEFAULT_COLORS.WHITE,
   fontWeight: 700,
-  zIndex: 1,
+  zIndex: 2,
+  boxShadow: '0 6px 16px rgba(255,119,51,0.35)',
 });
 
-const ProductContent = styled(CardContent)({
+const ProductContent = styled(CardContent)(({ theme }) => ({
   display: 'flex',
   flexDirection: 'column',
   gap: '8px',
   flexGrow: 1,
-  padding: '16px',
-});
+  padding: '16px 16px 12px',
+  minHeight: 160,
+  [theme.breakpoints.down('sm')]: {
+    minHeight: 140,
+  },
+}));
 
 // Título del producto con soporte responsive
 const ProductTitle = styled(Typography)(({ theme, isMobile }) => ({
   fontSize: isMobile ? 14 : 16,
-  fontWeight: 400,
+  fontWeight: 600,
   color: DEFAULT_COLORS.TEXT_PRIMARY,
   overflow: 'hidden',
   textOverflow: 'ellipsis',
@@ -111,7 +139,7 @@ const PriceContainer = styled(Box)({
 // Precio con soporte responsive
 const Price = styled(Typography)(({ isMobile }) => ({
   fontSize: isMobile ? 20 : 24,
-  fontWeight: 400,
+  fontWeight: 700,
   color: DEFAULT_COLORS.TEXT_PRIMARY,
 }));
 
@@ -124,7 +152,7 @@ const OriginalPrice = styled(Typography)(({ isMobile }) => ({
 
 const DiscountLabel = styled(Typography)(({ isMobile }) => ({
   fontSize: isMobile ? 12 : 14,
-  fontWeight: 600,
+  fontWeight: 700,
   color: DEFAULT_COLORS.SECONDARY,
   marginLeft: '4px',
 }));
@@ -161,11 +189,35 @@ const RatingsCount = styled(Typography)(({ isMobile }) => ({
 const CartButton = styled(IconButton)({
   backgroundColor: DEFAULT_COLORS.PRIMARY,
   color: DEFAULT_COLORS.WHITE,
-  transition: 'all 300ms',
+  transition: 'transform 200ms ease, box-shadow 200ms ease, background-color 200ms ease',
+  boxShadow: '0 8px 18px rgba(52,131,250,0.3)',
   '&:hover': {
     backgroundColor: DEFAULT_COLORS.PRIMARY_DARK,
-    transform: 'scale(1.02)',
+    transform: 'translateY(-1px)',
   },
+});
+
+const CategoryPill = styled(Chip)({
+  position: 'absolute',
+  top: 12,
+  right: 12,
+  zIndex: 2,
+  fontWeight: 600,
+  borderRadius: 999,
+  backgroundColor: 'rgba(255,255,255,0.9)',
+  backdropFilter: 'blur(6px)',
+});
+
+const FloatingActions = styled(Box)({
+  position: 'absolute',
+  right: 12,
+  bottom: 12,
+  display: 'flex',
+  gap: 8,
+  zIndex: 2,
+  opacity: 0,
+  transform: 'translateY(6px)',
+  transition: 'opacity 220ms ease, transform 220ms ease',
 });
 
 const LoadingContainer = styled(Box)({
@@ -248,6 +300,11 @@ const ProductCard = ({
               size="small"
             />
           )}
+
+          <CategoryPill
+            label={product.category || 'Sin categoría'}
+            size="small"
+          />
           
           <ProductImage
             component="img"
@@ -255,6 +312,24 @@ const ProductCard = ({
             alt={productName}
             onLoad={() => setIsImageLoaded(true)}
           />
+
+          <FloatingActions className="product-actions">
+            <IconButton
+              size="small"
+              aria-label="add to cart"
+              onClick={handleAddToCart}
+              sx={{
+                bgcolor: 'rgba(255,255,255,0.92)',
+                color: DEFAULT_COLORS.PRIMARY,
+                border: '1px solid rgba(52,131,250,0.2)',
+                '&:hover': {
+                  bgcolor: '#ffffff',
+                }
+              }}
+            >
+              <ShoppingCartIcon fontSize="small" />
+            </IconButton>
+          </FloatingActions>
         </ProductImageWrapper>
         
         <ProductContent>

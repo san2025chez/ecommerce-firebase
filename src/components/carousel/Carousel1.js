@@ -68,9 +68,9 @@ const useStyles = makeStyles((theme) => ({
     borderRadius: '0px',
     boxShadow: '0 4px 20px rgba(0,0,0,0.1)',
     [theme.breakpoints.down('sm')]: {
-      height: '25vh',
+      height: '220px',
       borderRadius: '0px',
-      marginBottom: theme.spacing(2)
+      marginBottom: 0
     }
   },
   slideContainer: {
@@ -80,6 +80,9 @@ const useStyles = makeStyles((theme) => ({
   slide: {
     height: '100%',
     position: 'relative',
+    [theme.breakpoints.down('sm')]: {
+      height: '100%',
+    },
     '&::after': {
       content: '""',
       position: 'absolute',
@@ -95,7 +98,9 @@ const useStyles = makeStyles((theme) => ({
     width: '100%',
     height: '100%',
     objectFit: 'cover',
+    display: 'block',
     [theme.breakpoints.down('sm')]: {
+      height: '100%',
       objectFit: 'cover',
     }
   },
@@ -132,10 +137,10 @@ const useStyles = makeStyles((theme) => ({
   },
   indicators: {
     position: 'absolute',
-    bottom: theme.spacing(2),
+    bottom: theme.spacing(1.5),
     left: '50%',
     transform: 'translateX(-50%)',
-    zIndex: 2,
+    zIndex: 3,
     display: 'flex',
     gap: theme.spacing(1),
   },

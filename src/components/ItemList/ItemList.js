@@ -92,7 +92,7 @@ export const ItemList = ({ items = [], loading = false }) => {
               ...item,
               freeShipping: item.price >= 5000,
               rating: {
-                value: item.rating?.value || (Math.floor(Math.random() * 5) + 1),
+                value: Math.max(item.rating?.value || 4, 4),
                 count: item.rating?.count || Math.floor(Math.random() * 500) + 1
               }
             };

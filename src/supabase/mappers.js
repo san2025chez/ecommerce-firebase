@@ -2,11 +2,19 @@
 export const mapSupabaseProduct = (product) => {
   if (!product) return null;
   
+  const images = Array.isArray(product.imagenes)
+    ? product.imagenes.map((url, index) => ({ id: `${product.id || 'img'}-${index}`, url }))
+    : product.imagenes
+      ? [{ id: `${product.id || 'img'}-0`, url: product.imagenes }]
+      : [];
+
   return {
     id: product.id,
     productName: product.nombre,
     price: product.precio,
-    img: product.imagen,
+    img: images[0]?.url || null,
+    images,
+    description: product.descripcion,
     stock: product.stock,
     category: product.categoria,
     categoria: product.categoria, // Mantener también el original para compatibilidad

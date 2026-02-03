@@ -348,16 +348,35 @@ export const ItemDetail2: FC<ProductBodyProps> = ({ product }) => {
                         prevEl: '.MuiSwipe-left'
                       }}
                     >
-                       <SwiperSlide>
-                            <img src={product.img} alt="..." style={{ width: '100%', height: 'auto', maxWidth: isMobile ? '60%' : '50%', maxHeight: isMobile ? '360px' : '350px', }} />
-                          </SwiperSlide>
-                     {/*  {product.images.map(({ id, url }) => {
-                        return (
+                      {Array.isArray(product.images) && product.images.length > 0 ? (
+                        product.images.map(({ id, url }: { id: string; url: string }) => (
                           <SwiperSlide key={id}>
-                            <img src={url} alt="..." style={{ width: '100%', height: 'auto', maxWidth: isMobile ? '60%' : '50%', maxHeight: isMobile ? '360px' : '350px', }} />
+                            <img
+                              src={url}
+                              alt="..."
+                              style={{
+                                width: '100%',
+                                height: 'auto',
+                                maxWidth: isMobile ? '60%' : '50%',
+                                maxHeight: isMobile ? '360px' : '350px'
+                              }}
+                            />
                           </SwiperSlide>
-                        );
-                      })} */}
+                        ))
+                      ) : (
+                        <SwiperSlide>
+                          <img
+                            src={product.img}
+                            alt="..."
+                            style={{
+                              width: '100%',
+                              height: 'auto',
+                              maxWidth: isMobile ? '60%' : '50%',
+                              maxHeight: isMobile ? '360px' : '350px'
+                            }}
+                          />
+                        </SwiperSlide>
+                      )}
                     </Swiper>
                     <IndicatorsContainer>
                       <SwipeIndicator className="MuiSwipe-root MuiSwipe-left">

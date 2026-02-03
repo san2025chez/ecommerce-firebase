@@ -218,7 +218,9 @@ const Item = ({ product, loading = false }) => {
             <Typography className={classes.price}>
               {formattedPrice}
             </Typography>
-
+            <Typography className={classes.price}>
+              {product.description}
+            </Typography>
             {product.stock > 0 ? (
               <Typography className={classes.stock} color="success">
                 Stock disponible: {product.stock}

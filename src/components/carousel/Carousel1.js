@@ -297,7 +297,7 @@ function HomePage() {
   return (
     <>
       <Carousel1 />
-      <Box sx={{ height: { xs: 16, sm: 24, md: 32 } }} />
+      <Box sx={{ height: { xs: 6, sm: 16, md: 24 } }} />
       <Home />
     </>
   );
